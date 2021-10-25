@@ -1,0 +1,12 @@
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\bin\Debug\net5.0\TrainBookingPlatform.TL.deps.json
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\bin\Debug\net5.0\TrainBookingPlatform.TL.dll
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\bin\Debug\net5.0\ref\TrainBookingPlatform.TL.dll
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\bin\Debug\net5.0\TrainBookingPlatform.TL.pdb
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.csproj.AssemblyReference.cache
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.AssemblyInfoInputs.cache
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.AssemblyInfo.cs
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.csproj.CoreCompileInputs.cache
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.dll
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\ref\TrainBookingPlatform.TL.dll
+C:\Users\Dragos\source\repos\Inginerie-Software\TrainBookingPlatform.TL\obj\Debug\net5.0\TrainBookingPlatform.TL.pdb
