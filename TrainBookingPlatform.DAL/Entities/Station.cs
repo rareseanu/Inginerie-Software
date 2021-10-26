@@ -1,4 +1,6 @@
-﻿namespace TrainBookingPlatform.DAL.Entities
+﻿using System.Collections.Generic;
+
+namespace TrainBookingPlatform.DAL.Entities
 {
     public class Station : BaseEntity
     {

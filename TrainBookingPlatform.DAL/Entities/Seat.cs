@@ -10,6 +10,6 @@ namespace TrainBookingPlatform.DAL.Entities
     {
         public int Number { get; set; }
         public int? WagonId { get; set; }
-        public Wagon? Wagon { get; set; }
+        public Wagon Wagon { get; set; }
     }
 }
