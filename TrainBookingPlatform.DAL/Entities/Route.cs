@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TrainBookingPlatform.DAL.Entities
 {
@@ -8,5 +9,6 @@ namespace TrainBookingPlatform.DAL.Entities
         public Station DestinationStation { get; set; }
         public int? DepartureStationId { get; set; }
         public Station DepartureStation { get; set; }
+        public List<Departure> Departures { get; set; }
     }
 }

@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrainBookingPlatform.DAL.Entities
+namespace TrainBookingPlatform.TL.DTOs
 {
-    public class Wagon : BaseEntity
+    public class WagonDTO
     {
         public int Number { get; set; }
         public int TrainId { get; set; }
-        public Train Train { get; set; }
-        public List<Seat> Seats { get; set; }
+        public TrainDTO Train { get; set; }
     }
 }
