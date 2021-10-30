@@ -12,7 +12,7 @@ namespace TrainBookingPlatform.DAL.Repository
     {
         public TrainBookingPlatformDbContext(DbContextOptions<TrainBookingPlatformDbContext> options) : base(options)
         {
-
+            
         }
         public DbSet<Departure> Departures { get; set; }
         public DbSet<Role> Roles { get; set; }
