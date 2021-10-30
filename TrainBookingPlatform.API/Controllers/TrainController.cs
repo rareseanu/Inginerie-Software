@@ -15,7 +15,7 @@ namespace TrainBookingPlatform.API.Controllers
         }
         public async Task<ObjectResult> UpdateTrain([FromBody] TrainDTO trainDTO)     
         {
-            return Ok(trainDTOq);
+            return Ok(trainDTO);
         }
         public async Task<ObjectResult> RemoveTrain([FromRoute] Guid id)
         {
