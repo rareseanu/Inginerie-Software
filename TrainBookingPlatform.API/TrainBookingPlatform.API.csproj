@@ -14,10 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainBookingPlatform.DAL\TrainBookingPlatform.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<ProjectReference Include="..\TrainBookingPlatform.TL\TrainBookingPlatform.TL.csproj" />
+    <ProjectReference Include="..\TrainBookingPlatform.TL\TrainBookingPlatform.TL.csproj" />
   </ItemGroup>
 
 </Project>
