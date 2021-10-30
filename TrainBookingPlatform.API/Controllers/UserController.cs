@@ -27,7 +27,7 @@ namespace TrainBookingPlatform.API.Controllers
             return Ok(null);
         }
 
-        public async Task<ObjectResult>  UpdateUser([FromBody] UserDTO userDTO)
+        public async Task<ObjectResult> UpdateUser([FromBody] UserDTO userDTO)
         {
             return Ok(null);
         }
