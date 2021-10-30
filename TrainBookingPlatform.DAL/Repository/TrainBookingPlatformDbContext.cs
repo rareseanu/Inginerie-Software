@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrainBookingPlatform.DAL.Entities;
 
 namespace TrainBookingPlatform.DAL.Repository
@@ -12,7 +7,7 @@ namespace TrainBookingPlatform.DAL.Repository
     {
         public TrainBookingPlatformDbContext(DbContextOptions<TrainBookingPlatformDbContext> options) : base(options)
         {
-            
+
         }
         public DbSet<Departure> Departures { get; set; }
         public DbSet<Role> Roles { get; set; }
