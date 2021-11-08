@@ -5,7 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TrainBookingPlatform.BL.Classes;
+using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Repository;
+using TrainBookingPlatform.DAL.Repository.Classes;
+using TrainBookingPlatform.DAL.Repository.Interfaces;
 
 namespace TrainBookingPlatform.API
 {
@@ -23,6 +27,8 @@ namespace TrainBookingPlatform.API
         {
             services.AddDbContext<TrainBookingPlatformDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TrainBookingPlatformDbContext")));
             services.AddControllers();
+            services.AddScoped<ITrainService,TrainService>();
+            services.AddScoped<ITrainRepository,TrainRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TrainBookingPlatform.API", Version = "v1" });
