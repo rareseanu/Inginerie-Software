@@ -7,12 +7,12 @@ using TrainBookingPlatform.DAL.Entities;
 
 namespace TrainBookingPlatform.BL.Interfaces
 {
-    public interface ITicketService
+    public interface ITrainService
     {
-        public Task<Ticket> Add(Ticket ticket);
-        public Ticket Delete(int id);
-        public Ticket Update(Ticket ticket);
-        public Ticket Get(int id);
-        public IEnumerable<Ticket> GetAll();
+        public Task<Train> Add(Train train);
+        public Train Delete(int id);
+        public Train Update(Train train);
+        public Train Get(int id);
+        public IEnumerable<Train> GetAll();
     }
 }
