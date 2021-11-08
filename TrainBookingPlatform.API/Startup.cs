@@ -29,6 +29,8 @@ namespace TrainBookingPlatform.API
             services.AddControllers();
             services.AddScoped<ITrainService,TrainService>();
             services.AddScoped<ITrainRepository,TrainRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TrainBookingPlatform.API", Version = "v1" });
