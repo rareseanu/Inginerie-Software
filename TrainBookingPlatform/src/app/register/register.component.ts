@@ -9,10 +9,8 @@ import { Credentials } from '../credentials';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  credentials: Credentials = {
-    email: "",
-    password: ""
-  }
+    email: string = "";
+    password: string = ""
 
   constructor(private http:HttpClient) { }
 
@@ -21,17 +19,17 @@ export class RegisterComponent implements OnInit {
 
 
   onRegister(): void {
-    console.log(this.credentials);
     var postData = {
-      email: '',
-      password: 'email@email.com'
+      email: this.email,
+      password: this.password
     };
 
     const headers: HttpHeaders = new HttpHeaders();
-    headers.set('Content-Type', 'application/x-www-form-urlencoded');
-
-    this.http.post('/UserRole/SaveUserRoles', postData, { headers: headers })
+    headers.set('Content-Type', 'application/json');
+    
+    this.http.put('https://localhost:44367/api/user/register', postData, { headers: headers })
       .subscribe(result => {
+        console.log(result)
       });
   }
 }

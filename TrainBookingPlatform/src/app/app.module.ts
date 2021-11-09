@@ -20,7 +20,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
