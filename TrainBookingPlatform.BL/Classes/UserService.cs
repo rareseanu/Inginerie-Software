@@ -47,7 +47,7 @@ namespace TrainBookingPlatform.BL.Classes
         {
             using (SHA512 encryption = SHA512.Create())
             {
-                password = encryption.ComputeHash(Encoding.UTF8.GetBytes(password)).ToString();
+                password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password)));
                 User existingUser = _userRepository.Get(p => p.EmailAddress == email && p.Password == password).FirstOrDefault();
                 if(existingUser != null)
                 {
@@ -60,11 +60,11 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<User> Register(string email, string password)
         {
             using (SHA512 encryption = SHA512.Create()) { 
-                User user = new User() { EmailAddress = email, Password = encryption.ComputeHash(Encoding.UTF8.GetBytes(password)).ToString() };
+                User user = new User() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))),RoleId=1};
                 User existingUser = _userRepository.Get(p => p.EmailAddress == email).FirstOrDefault();
                 if (existingUser == null)
                 {
-                    await Add(user);
+                    user = await Add(user);
                     return user;
                 }
                 return null;
