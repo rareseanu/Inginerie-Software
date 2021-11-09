@@ -27,8 +27,8 @@ namespace TrainBookingPlatform.API
         {
             services.AddDbContext<TrainBookingPlatformDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TrainBookingPlatformDbContext")));
             services.AddControllers();
-            services.AddScoped<ITrainService,TrainService>();
-            services.AddScoped<ITrainRepository,TrainRepository>();
+            services.AddScoped<ITrainService, TrainService>();
+            services.AddScoped<ITrainRepository, TrainRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITicketService, TicketService>();
@@ -50,6 +50,13 @@ namespace TrainBookingPlatform.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(p =>
+            {
+                p.AllowAnyOrigin();
+                p.AllowAnyMethod();
+                p.AllowAnyHeader();
+            });
 
             app.UseRouting();
 
