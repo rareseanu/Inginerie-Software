@@ -15,45 +15,45 @@ namespace TrainBookingPlatform.API.Controllers
         {
             _userService = userService;
         }
-        [HttpGet]
+        [HttpGet("")]
         public async Task<ObjectResult> GetUsers()
         {
             return Ok(null);
         }
-        [HttpGet]
+        [HttpGet("user/{id}")]
         public async Task<ObjectResult> GetUser([FromRoute] Guid id)
         {
             return Ok(null);
         }
-        [HttpPut]
-        public async Task<ObjectResult> Register([FromBody] UserDTO userDTO)
+        [HttpPut("register")]
+        public async Task<ObjectResult> Register([FromBody] LoginDTO loginDTO)
         {      
-            return Ok(_userService.Register(userDTO.EmailAddress,userDTO.Password));
+            return Ok(_userService.Register(loginDTO.Email, loginDTO.Password));
         }
         
-        [HttpDelete]
+        [HttpDelete("delete")]
         public async Task<ObjectResult> RemoveUser([FromRoute] Guid id)
         {
             return Ok(null);
         }
-        [HttpPost]
+        [HttpPost("user")]
         public async Task<ObjectResult> UpdateUser([FromBody] UserDTO userDTO)
         {
             return Ok(null);
         }
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<ObjectResult> Login([FromBody] LoginDTO loginDTO)
         {
             return Ok(_userService.Login(loginDTO.Email, loginDTO.Password));
         }
 
-        [HttpPut]
+        [HttpPut("refreshToken")]
         public async Task<ObjectResult> RefreshToken([FromBody] RefreshTokenDTO refreshTokenDTO)
         {
             return Ok(null);
         }
 
-        [HttpPost]
+        [HttpPost("revokeToken")]
         public async Task<ObjectResult> RevokeToken([FromBody] RefreshTokenDTO refreshTokenDTO)
         {
             return Ok(null);
