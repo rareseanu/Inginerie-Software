@@ -10,6 +10,8 @@ namespace TrainBookingPlatform.BL.Interfaces
         public User Delete(int id);
         public User Update(User user);
         public User Get(int id);
+        public User Login(string email, string password);
+        public Task<User> Register(string email, string password);
         public IEnumerable<User> GetAll();
     }
 }
