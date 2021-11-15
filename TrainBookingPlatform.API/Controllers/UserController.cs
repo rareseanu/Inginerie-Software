@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
@@ -44,13 +46,33 @@ namespace TrainBookingPlatform.API.Controllers
         [HttpPost("login")]
         public async Task<ObjectResult> Login([FromBody] LoginDTO loginDTO)
         {
-            return Ok(_userService.Login(loginDTO.Email, loginDTO.Password));
+            var result = await _userService.Login(loginDTO.Email, loginDTO.Password);
+            SetRefreshTokenCookie(result.RefreshToken, result.ExpiresAt);
+            return Ok(result);
         }
 
         [HttpPut("refreshToken")]
-        public async Task<ObjectResult> RefreshToken([FromBody] RefreshTokenDTO refreshTokenDTO)
+        public async Task<ObjectResult> RefreshToken()
         {
+            if (Request.Cookies["refreshToken"] != null)
+            {
+                var result = await _userService.RefreshToken(Request.Cookies["refreshToken"]);
+                SetRefreshTokenCookie(result.RefreshToken, result.ExpiresAt);
+                return Ok(result);
+            }
             return Ok(null);
+        }
+
+        private void SetRefreshTokenCookie(string refreshToken, DateTime expires)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = expires,
+                SameSite = SameSiteMode.None
+            };
+            Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
 
         [HttpPost("revokeToken")]

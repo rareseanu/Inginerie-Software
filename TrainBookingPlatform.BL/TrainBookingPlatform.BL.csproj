@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainBookingPlatform.DAL\TrainBookingPlatform.DAL.csproj" />
+    <ProjectReference Include="..\TrainBookingPlatform.TL\TrainBookingPlatform.TL.csproj" />
   </ItemGroup>
 
 </Project>
