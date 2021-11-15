@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
 using TrainBookingPlatform.BL.Classes;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Repository;
@@ -33,6 +37,41 @@ namespace TrainBookingPlatform.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(jwt =>
+                {
+                    var jwtSecret = Encoding.ASCII.GetBytes("asfasfasfasg1224124124124124safasfasfasfasf");
+                    jwt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(jwtSecret),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddMvc()
+                .AddNewtonsoftJson();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.SetIsOriginAllowed(origin => true);
+                    builder.AllowAnyHeader();
+                    builder.AllowCredentials();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyHeader();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TrainBookingPlatform.API", Version = "v1" });
@@ -51,12 +90,7 @@ namespace TrainBookingPlatform.API
 
             app.UseHttpsRedirection();
 
-            app.UseCors(p =>
-            {
-                p.AllowAnyOrigin();
-                p.AllowAnyMethod();
-                p.AllowAnyHeader();
-            });
+            app.UseCors();
 
             app.UseRouting();
 

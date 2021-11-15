@@ -11,5 +11,6 @@ namespace TrainBookingPlatform.DAL.Entities
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public List<Ticket> Tickets { get; set; }
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }
