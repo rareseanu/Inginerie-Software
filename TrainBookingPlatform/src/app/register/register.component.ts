@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Credentials } from '../credentials';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -9,27 +11,37 @@ import { Credentials } from '../credentials';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-    email: string = "";
-    password: string = ""
+  registerForm: FormGroup;
+  submitted = false;
+  registered = false;
+  get f() { return this.registerForm.controls; }
 
-  constructor(private http:HttpClient) { }
-
-  ngOnInit(): void {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
-
-  onRegister(): void {
-    var postData = {
-      email: this.email,
-      password: this.password
-    };
-
-    const headers: HttpHeaders = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    
-    this.http.put('https://localhost:44367/api/user/register', postData, { headers: headers })
-      .subscribe(result => {
-        console.log(result)
-      });
+  ngOnInit() {
+    this.registerForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required)
+    })
+    this.authenticationService.refreshToken().subscribe();
   }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    this.authenticationService.register(this.f['email'].value, this.f['password'].value)
+        .subscribe(
+            (data) => {
+                this.registered = true;
+                console.log(data);
+            },
+            (error) => {
+              console.log(error);
+            });
+  } 
 }

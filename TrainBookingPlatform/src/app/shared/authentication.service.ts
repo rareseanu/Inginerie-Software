@@ -37,6 +37,15 @@ export class AuthenticationService {
                 }),
             );
     }
+
+    register(email: string, password: string): Observable<User> {
+        return this.http.put<User>(`https://localhost:44367/api/user/register`, { email, password }, { withCredentials: true })
+            .pipe(
+                tap(data => {
+                    console.log("User registered.");
+                }),
+            );
+    }
     
     refreshToken(): Observable<User> {
         return this.http.put<User>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
