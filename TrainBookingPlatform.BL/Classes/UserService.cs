@@ -58,7 +58,7 @@ namespace TrainBookingPlatform.BL.Classes
             {
                 password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password)));
                 User existingUser = _userRepository.Get(p => p.EmailAddress == email && p.Password == password).Include(p => p.Role).FirstOrDefault();
-                if(existingUser != null)
+                if (existingUser != null)
                 {
                     RefreshToken refreshToken = new RefreshToken()
                     {
@@ -83,9 +83,9 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<LoginResponseDTO> RefreshToken(string refreshToken)
         {
-            RefreshToken existingRefreshToken =  _refreshTokenRepository.Get(p => p.Token.Equals(refreshToken)).FirstOrDefault();
+            RefreshToken existingRefreshToken = _refreshTokenRepository.Get(p => p.Token.Equals(refreshToken)).FirstOrDefault();
 
-            if(existingRefreshToken != null)
+            if (existingRefreshToken != null)
             {
                 User user = _userRepository.Get(p => p.Id == existingRefreshToken.UserId).Include(p => p.Role).FirstOrDefault();
                 RefreshToken newRefreshToken = new RefreshToken()
@@ -142,8 +142,9 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<User> Register(string email, string password)
         {
-            using (SHA512 encryption = SHA512.Create()) { 
-                User user = new User() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))),RoleId=1};
+            using (SHA512 encryption = SHA512.Create())
+            {
+                User user = new User() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
                 User existingUser = _userRepository.Get(p => p.EmailAddress == email).FirstOrDefault();
                 if (existingUser == null)
                 {
@@ -153,6 +154,16 @@ namespace TrainBookingPlatform.BL.Classes
                 return null;
             }
         }
-        
+
+        public async Task RevokeToken(string token)
+        {
+            var refreshToken = _refreshTokenRepository.Get(p => p.Token.Equals(token)).FirstOrDefault();
+
+            if (refreshToken != null)
+            {
+                _refreshTokenRepository.Delete(refreshToken);
+            }
+        }
+
     }
 }

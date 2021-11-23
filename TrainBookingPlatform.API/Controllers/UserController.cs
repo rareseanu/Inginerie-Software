@@ -29,10 +29,10 @@ namespace TrainBookingPlatform.API.Controllers
         }
         [HttpPut("register")]
         public async Task<ObjectResult> Register([FromBody] LoginDTO loginDTO)
-        {      
+        {
             return Ok(_userService.Register(loginDTO.Email, loginDTO.Password));
         }
-        
+
         [HttpDelete("delete")]
         public async Task<ObjectResult> RemoveUser([FromRoute] Guid id)
         {
@@ -78,6 +78,8 @@ namespace TrainBookingPlatform.API.Controllers
         [HttpPost("revokeToken")]
         public async Task<ObjectResult> RevokeToken([FromBody] RefreshTokenDTO refreshTokenDTO)
         {
+            await _userService.RevokeToken(refreshTokenDTO.RefreshToken);
+            Response.Cookies.Delete("refreshToken");
             return Ok(null);
         }
     }
