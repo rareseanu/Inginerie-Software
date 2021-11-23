@@ -19,7 +19,7 @@
       </ul>
       <span class="me-4" *ngIf="authenticationService.getCurrentUser">{{authenticationService.getCurrentUserEmail()}}</span>
       <button *ngIf="!authenticationService.getCurrentUser" type="button" class="btn btn-primary" routerLink="/login">Login</button>
-      <button *ngIf="authenticationService.getCurrentUser" type="button" class="btn btn-primary">Logout</button>
+      <button (click)="logout()" *ngIf="authenticationService.getCurrentUser" type="button" class="btn btn-primary">Logout</button>
     </div>
   </div>
 </nav>
