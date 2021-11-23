@@ -75,11 +75,22 @@ namespace TrainBookingPlatform.API.Controllers
             Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
         }
 
-        [HttpPost]
+        [HttpPost("revokeToken")]
         public async Task<ObjectResult> RevokeToken()
         {
             await _userService.RevokeToken(Request.Cookies["refreshToken"]);
-            Response.Cookies.Delete("refreshToken");
+            if (Request.Cookies["refreshToken"] != null)
+            {
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.Now.AddDays(-1d),
+                    SameSite = SameSiteMode.None
+                };
+                Response.Cookies.Append("refreshToken", "", cookieOptions);
+            }
+
             return Ok(null);
         }
     }

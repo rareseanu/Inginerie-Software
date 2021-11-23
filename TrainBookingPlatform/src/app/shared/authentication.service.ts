@@ -38,10 +38,11 @@ export class AuthenticationService {
             );
     }
 
-    logout(): Observable<User> {
-        return this.http.post<User>(`https://localhost:44367/api/user/revokeToken`, {}, { withCredentials: true })
+    logout(){
+        return this.http.post(`https://localhost:44367/api/user/revokeToken`, {}, { withCredentials: true })
             .pipe(
                 tap(data => { 
+                    this.currentUserSubject.next(null);
                     this.stopRefreshTokenTimer();
                     console.log("User logged out.");
                 }),
