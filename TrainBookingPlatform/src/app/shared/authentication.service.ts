@@ -38,6 +38,17 @@ export class AuthenticationService {
             );
     }
 
+    logout(email: string, password: string): Observable<User> {
+        return this.http.post<User>(`https://localhost:44367/api/user/revokeToken`, { email, password }, { withCredentials: true })
+            .pipe(
+                tap(data => { 
+                    this.currentUserSubject.next(data);
+                    this.stopRefreshTokenTimer();
+                    console.log("User logged out.");
+                }),
+            );
+    }
+
     register(email: string, password: string): Observable<User> {
         return this.http.put<User>(`https://localhost:44367/api/user/register`, { email, password }, { withCredentials: true })
             .pipe(

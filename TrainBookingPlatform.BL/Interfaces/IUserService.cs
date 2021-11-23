@@ -15,5 +15,6 @@ namespace TrainBookingPlatform.BL.Interfaces
         public Task<LoginResponseDTO> RefreshToken(string refreshToken);
         public Task<User> Register(string email, string password);
         public IEnumerable<User> GetAll();
+        public Task RevokeToken(string token);
     }
 }
