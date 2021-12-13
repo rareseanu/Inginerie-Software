@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   get f() { return this.loginForm.controls; }
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(public authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {

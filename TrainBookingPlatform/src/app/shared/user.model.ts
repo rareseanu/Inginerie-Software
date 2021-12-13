@@ -3,4 +3,6 @@ export class User {
     public token: string;
     public userId: number;
     public expiresAt: Date;
+    public email: string;
+    public role: string;
 }
