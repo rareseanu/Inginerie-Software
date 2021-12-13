@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   registered = false;
   get f() { return this.registerForm.controls; }
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(public authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {

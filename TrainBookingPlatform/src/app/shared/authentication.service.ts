@@ -20,29 +20,35 @@ export class AuthenticationService {
         return this.currentUserSubject.getValue();
     }
 
-    public getCurrentUserEmail() {
-        if(this.getCurrentUser) {
-            const jwtToken = JSON.parse(atob(this.getCurrentUser.token.split('.')[1]));
-            return jwtToken.Email;
-        }
+    public getCurrentUserEmail(token: string) {
+        const jwtToken = JSON.parse(atob(token.split('.')[1]));
+        return jwtToken.Email;
+    }
+
+    public getCurrentUserRole(token: string) {
+        const jwtToken = JSON.parse(atob(token.split('.')[1]));
+        return jwtToken.Roles;
     }
 
     login(email: string, password: string): Observable<User> {
         return this.http.post<User>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true })
             .pipe(
-                tap(data => { 
+                tap(data => {
+                    data.role = this.getCurrentUserRole(data.token);
+                    data.email = this.getCurrentUserEmail(data.token);
                     this.currentUserSubject.next(data);
                     this.startRefreshTokenTimer();
                     console.log("User logged in.");
+                    console.log(data);
                 }),
             );
     }
 
-    logout(email: string, password: string): Observable<User> {
-        return this.http.post<User>(`https://localhost:44367/api/user/revokeToken`, { email, password }, { withCredentials: true })
+    logout() {
+        return this.http.post(`https://localhost:44367/api/user/revokeToken`, {}, { withCredentials: true })
             .pipe(
-                tap(data => { 
-                    this.currentUserSubject.next(data);
+                tap(data => {
+                    this.currentUserSubject.next(null);
                     this.stopRefreshTokenTimer();
                     console.log("User logged out.");
                 }),
@@ -57,11 +63,13 @@ export class AuthenticationService {
                 }),
             );
     }
-    
+
     refreshToken(): Observable<User> {
         return this.http.put<User>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
             .pipe(
                 tap(data => {
+                    data.role = this.getCurrentUserRole(data.token);
+                    data.email = this.getCurrentUserEmail(data.token);
                     this.currentUserSubject.next(data);
                     this.startRefreshTokenTimer();
                     console.log("Token refreshed.");
@@ -70,7 +78,7 @@ export class AuthenticationService {
     }
 
     private startRefreshTokenTimer() {
-        if(this.getCurrentUser) {
+        if (this.getCurrentUser) {
             const jwtToken = JSON.parse(atob(this.getCurrentUser.token.split('.')[1]));
             console.log(jwtToken);
             const expires = new Date(jwtToken.exp * 1000);
