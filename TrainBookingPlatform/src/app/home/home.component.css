@@ -1,5 +1,20 @@
 .image {
-    height: 400px;
-    width: 1000px;
-    object-fit: cover;
+    height: 80vh;
+    width: 100vw;
+}
+
+.carousel-inner .carousel-item:nth-child(1) .image {
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)), url("../../assets/train1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.carousel-inner .carousel-item:nth-child(2) .image {
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)), url("../../assets/train2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.carousel-inner .carousel-item:nth-child(3) .image {
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8)), url("../../assets/train3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
