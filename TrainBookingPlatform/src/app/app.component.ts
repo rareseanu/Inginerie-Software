@@ -12,5 +12,7 @@ export class AppComponent {
 
   constructor(public authenticationService: AuthenticationService) {}
 
-
+  public logout() {
+    this.authenticationService.logout().subscribe();
+  }
 }
