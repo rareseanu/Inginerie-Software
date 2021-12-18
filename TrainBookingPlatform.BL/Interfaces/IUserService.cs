@@ -8,8 +8,8 @@ namespace TrainBookingPlatform.BL.Interfaces
     public interface IUserService
     {
         public Task<User> Add(User user);
-        public User Delete(int id);
-        public User Update(User user);
+        public Task<User> Delete(int id);
+        public Task<User> Update(User user);
         public User Get(int id);
         public Task<LoginResponseDTO> Login(string email, string password);
         public Task<LoginResponseDTO> RefreshToken(string refreshToken);

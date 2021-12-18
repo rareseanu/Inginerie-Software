@@ -18,18 +18,18 @@ namespace TrainBookingPlatform.BL.Classes
         {
             return await _ticketRepository.Create(ticket);
         }
-        public Ticket Delete(int id)
+        public async Task<Ticket> Delete(int id)
         {
             Ticket ticket = _ticketRepository.Get(p => p.Id == id).FirstOrDefault();
             if (ticket != null)
             {
-                return _ticketRepository.Delete(ticket);
+                return await _ticketRepository.Delete(ticket);
             }
             return null;
         }
-        public Ticket Update(Ticket ticket)
+        public async Task<Ticket> Update(Ticket ticket)
         {
-            return _ticketRepository.Update(ticket);
+            return await _ticketRepository.Update(ticket);
         }
 
         public Ticket Get(int id)

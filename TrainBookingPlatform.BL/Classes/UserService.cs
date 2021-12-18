@@ -29,18 +29,18 @@ namespace TrainBookingPlatform.BL.Classes
         {
             return await _userRepository.Create(user);
         }
-        public User Delete(int id)
+        public async Task<User> Delete(int id)
         {
             User user = _userRepository.Get(p => p.Id == id).FirstOrDefault();
             if (user != null)
             {
-                return _userRepository.Delete(user);
+                return await _userRepository.Delete(user);
             }
             return null;
         }
-        public User Update(User user)
+        public async Task<User> Update(User user)
         {
-            return _userRepository.Update(user);
+            return await _userRepository.Update(user);
         }
 
         public User Get(int id)
