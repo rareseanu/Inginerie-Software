@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { DxDataGridModule } from 'devextreme-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { HomeComponent } from './home/home.component';
 import { StationComponent } from './station/station.component';
+import { StationDevextremeComponent } from './station/station-devextreme/station-devextreme.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { StationComponent } from './station/station.component';
     RegisterComponent,
     UserManagementComponent,
     HomeComponent,
-    StationComponent
+    StationComponent,
+    StationDevextremeComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { StationComponent } from './station/station.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DxDataGridModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -21,19 +21,19 @@ namespace TrainBookingPlatform.BL.Classes
             return await _departureRepository.Create(departure);
         }
 
-        public Departure Delete(int id)
+        public async Task<Departure> Delete(int id)
         {
             Departure departure = _departureRepository.Get(p => p.Id == id).FirstOrDefault();
             if (departure != null)
             {
-                return _departureRepository.Delete(departure);
+                return await _departureRepository.Delete(departure);
             }
             return null;
         }
 
-        public Departure Update(Departure departure)
+        public async Task<Departure> Update(Departure departure)
         {
-            return _departureRepository.Update(departure);
+            return await _departureRepository.Update(departure);
         }
 
         public Departure Get(int id)

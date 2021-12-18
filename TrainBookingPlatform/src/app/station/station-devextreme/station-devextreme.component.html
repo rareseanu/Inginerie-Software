@@ -1,0 +1,37 @@
+<div id="data-grid-demo">
+    <dx-data-grid
+      id="gridContainer"
+      [dataSource]="dataSource"
+      keyExpr="id"
+      [showBorders]="true"
+      (onRowRemoving)="removeStation($event)"
+      (onRowInserting)="addStation($event)"
+      (onRowUpdating)="updateStation($event)"
+    >
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-editing
+        mode="popup"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+      >
+        <dxo-popup
+          title="Station Info"
+          [showTitle]="true"
+          [width]="700"
+          [height]="525"
+        >
+        </dxo-popup>
+        <dxo-form>
+          <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+            <dxi-item dataField="name"></dxi-item>
+            <dxi-item dataField="numberOfLines"></dxi-item>
+          </dxi-item>
+        </dxo-form>
+      </dxo-editing>
+  
+      <dxi-column dataField="name" caption="Name"></dxi-column>
+      <dxi-column dataField="numberOfLines" caption="Number of lines"></dxi-column>
+    </dx-data-grid>
+  </div>
+  

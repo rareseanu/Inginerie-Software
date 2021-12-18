@@ -18,22 +18,24 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<Station> Add(Station station)
         {
+            station.Id = 0;
             return await _stationRepository.Create(station);
         }
 
-        public Station Delete(int id)
+        public async Task<Station> Delete(int id)
         {
             Station station = _stationRepository.Get(p => p.Id == id).FirstOrDefault();
             if (station != null)
             {
-                return _stationRepository.Delete(station);
+                return await _stationRepository.Delete(station);
             }
             return null;
         }
 
-        public Station Update(Station station)
+        public async Task<Station> Update(Station station)
         {
-            return _stationRepository.Update(station);
+            return await _stationRepository.Update(station);
+
         }
 
         public Station Get(int id)

@@ -7,7 +7,7 @@ using TrainBookingPlatform.DAL.Repository.Interfaces;
 
 namespace TrainBookingPlatform.BL.Classes
 {
-    public class TrainService: ITrainService
+    public class TrainService : ITrainService
     {
         private ITrainRepository _trainRepository;
         public TrainService(ITrainRepository trainRepository)
@@ -18,18 +18,18 @@ namespace TrainBookingPlatform.BL.Classes
         {
             return await _trainRepository.Create(train);
         }
-        public Train Delete(int id)
+        public async Task<Train> Delete(int id)
         {
             Train train = _trainRepository.Get(p => p.Id == id).FirstOrDefault();
             if (train != null)
             {
-                return _trainRepository.Delete(train);
+                return await _trainRepository.Delete(train);
             }
             return null;
         }
-        public Train Update(Train train)
+        public async Task<Train> Update(Train train)
         {
-            return _trainRepository.Update(train);
+            return await _trainRepository.Update(train);
         }
 
         public Train Get(int id)
