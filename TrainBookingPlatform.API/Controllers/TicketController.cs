@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
+using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.API.Controllers
@@ -10,33 +11,38 @@ namespace TrainBookingPlatform.API.Controllers
     [Route("api/ticket")]
     public class TicketController : Controller
     {
-        private ITicketService _ticketService;
-        public TicketController(ITicketService ticketService)
+        private ITicketService _service;
+
+        public TicketController(ITicketService service)
         {
-            _ticketService = ticketService;
+            _service = service;
         }
-        [NonAction]
-        public async Task<ObjectResult> AddTicket([FromBody] TicketDTO ticketDTO)
+
+        [HttpPost]
+        public async Task<ObjectResult> AddTicket([FromBody] Ticket ticket)
         {
-            return Ok(ticketDTO);
+            await _service.Add(ticket);
+            return Ok("added");
         }
-        [NonAction]
-        public async Task<ObjectResult> UpdateTicket([FromBody] TicketDTO ticketDTO)
+        [HttpPut]
+        public async Task<ObjectResult> UpdateTicket([FromBody] Ticket ticket)
         {
-            return Ok(ticketDTO);
+            await _service.Update(ticket);
+            return Ok("updated");
         }
-        [NonAction]
-        public async Task<ObjectResult> RemoveTicket([FromRoute] Guid id)
+        [HttpDelete("{id}")]
+        public async Task<ObjectResult> RemoveTicket([FromRoute] int id)
         {
-            return Ok(null);
+            await _service.Delete(id);
+            return Ok("removed");
         }
-        [NonAction]
+        [HttpGet]
         public async Task<ObjectResult> GetTickets()
         {
-            return Ok(null);
+            return Ok(_service.GetAll());
         }
         [NonAction]
-        public async Task<ObjectResult> GetTicket([FromRoute] Guid id)
+        public async Task<ObjectResult> GetTicket([FromBody] Guid id)
         {
             return Ok(null);
         }

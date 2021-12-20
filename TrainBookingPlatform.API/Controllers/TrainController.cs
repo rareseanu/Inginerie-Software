@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
+using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.API.Controllers
@@ -10,33 +11,38 @@ namespace TrainBookingPlatform.API.Controllers
     [Route("api/train")]
     public class TrainController : Controller
     {
-        private ITrainService _trainService;
-        public TrainController(ITrainService trainService)
+        private ITrainService _service;
+
+        public TrainController(ITrainService service)
         {
-            _trainService = trainService;
+            _service = service;
         }
-        [NonAction]
-        public async Task<ObjectResult> AddTrain([FromBody] TrainDTO trainDTO)
+
+        [HttpPost]
+        public async Task<ObjectResult> AddTrain([FromBody] Train train)
         {
-            return Ok(trainDTO);
+            await _service.Add(train);
+            return Ok("added");
         }
-        [NonAction]
-        public async Task<ObjectResult> UpdateTrain([FromBody] TrainDTO trainDTO)
+        [HttpPut]
+        public async Task<ObjectResult> UpdateTrain([FromBody] Train train)
         {
-            return Ok(trainDTO);
+            await _service.Update(train);
+            return Ok("updated");
         }
-        [NonAction]
-        public async Task<ObjectResult> RemoveTrain([FromRoute] Guid id)
+        [HttpDelete("{id}")]
+        public async Task<ObjectResult> RemoveTrain([FromRoute] int id)
         {
-            return Ok(null);
+            await _service.Delete(id);
+            return Ok("removed");
         }
-        [NonAction]
+        [HttpGet]
         public async Task<ObjectResult> GetTrains()
         {
-            return Ok(null);
+            return Ok(_service.GetAll());
         }
         [NonAction]
-        public async Task<ObjectResult> GetTrain([FromRoute] Guid id)
+        public async Task<ObjectResult> GetTrain([FromBody] Guid id)
         {
             return Ok(null);
         }
