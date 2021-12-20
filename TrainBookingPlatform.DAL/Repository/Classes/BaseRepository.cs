@@ -24,18 +24,18 @@ namespace TrainBookingPlatform.DAL.Repository.Classes
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null)
         {
             if (predicate != null)
-                return table.Where(predicate);
+                return table.Where(predicate).AsNoTracking();
 
-            return table;
+            return table.AsNoTracking();
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null)
+        public async Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> predicate = null)
         {
             if (predicate != null)
                 return table
-                    .Where(predicate);
+                    .Where(predicate).AsNoTracking();
 
-            return table;
+            return table.AsNoTracking();
         }
 
         public int CountAll(Expression<Func<T, bool>> predicate = null)

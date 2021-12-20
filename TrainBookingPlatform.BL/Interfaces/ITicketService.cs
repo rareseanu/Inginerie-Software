@@ -12,7 +12,7 @@ namespace TrainBookingPlatform.BL.Interfaces
         public Task<Ticket> Add(Ticket ticket);
         public Task<Ticket> Delete(int id);
         public Task<Ticket> Update(Ticket ticket);
-        public Ticket Get(int id);
-        public IEnumerable<Ticket> GetAll();
+        public Task<Ticket> Get(int id);
+        public Task<IEnumerable<Ticket>> GetAll();
     }
 }

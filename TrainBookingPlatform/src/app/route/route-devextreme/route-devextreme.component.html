@@ -24,17 +24,17 @@
         </dxo-popup>
         <dxo-form>
           <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-            <dxi-item dataField="departureStation"></dxi-item>
-            <dxi-item dataField="destinationStation"></dxi-item>
+            <dxi-item dataField="departureStationId"></dxi-item>
+            <dxi-item dataField="destinationStationId"></dxi-item>
           </dxi-item>
         </dxo-form>
       </dxo-editing>
   
-      <dxi-column dataField="departureStation" caption="Departure">
+      <dxi-column dataField="departureStationId" caption="Departure">
         <dxo-lookup [dataSource]="stations" displayExpr="name" valueExpr="id">
         </dxo-lookup>
       </dxi-column>
-      <dxi-column dataField="destinationStation" caption="Destination">
+      <dxi-column dataField="destinationStationId" caption="Destination">
         <dxo-lookup [dataSource]="stations" displayExpr="name" valueExpr="id">
         </dxo-lookup>
       </dxi-column>

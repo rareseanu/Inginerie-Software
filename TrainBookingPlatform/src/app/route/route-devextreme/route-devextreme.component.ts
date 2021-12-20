@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { tap } from 'rxjs';
+import { find, tap } from 'rxjs';
 import { Route } from 'src/app/shared/route.model';
 import { Station } from 'src/app/shared/station.model';
 
@@ -16,18 +16,24 @@ export class RouteDevextremeComponent {
 
 
   constructor(private http: HttpClient) {
-    this.getRoutes();
     this.getStations();
   }
 
   getRoutes() {
     this.http.get(`https://localhost:44367/api/route/`, { withCredentials: true })
-      .subscribe(data => this.dataSource = <Route[]>data);
+      .subscribe(data => 
+        {
+          this.dataSource = <Route[]>data;
+        });
   }
 
   getStations() {
     this.http.get(`https://localhost:44367/api/station/`, { withCredentials: true })
-      .subscribe(data => this.stations = <Station[]>data);
+      .subscribe(data => 
+        {
+          this.stations = <Station[]>data;
+          this.getRoutes();
+        });
   }
 
   remove(data: any) {
@@ -39,9 +45,8 @@ export class RouteDevextremeComponent {
     ).subscribe();
   }
 
-  add(data: any) {
+  add(data: any) { 
     var route: Route = data.data;
-    console.log(route);
     this.http.post(`https://localhost:44367/api/route/`, route, { withCredentials: true, responseType: 'text' }).pipe(
       tap(() => {
         this.getRoutes();
@@ -51,7 +56,6 @@ export class RouteDevextremeComponent {
 
   update(data: any) {
     var route: Route = Object.assign(data.oldData, data.newData);
-    console.log(route);
     this.http.put(`https://localhost:44367/api/route/`, route, { withCredentials: true, responseType: 'text' }).pipe(
       tap(() => {
         this.getRoutes();

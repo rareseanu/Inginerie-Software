@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
@@ -19,12 +20,16 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<Route> Add(Route route)
         {
             route.Id = 0;
-            return await _routeRepository.Create(route);
+            if (route.DepartureStationId != route.DestinationStationId)
+            {
+                return await _routeRepository.Create(route);
+            }
+            return null;
         }
 
         public async Task<Route> Delete(int id)
         {
-            Route route = _routeRepository.Get(p => p.Id == id).FirstOrDefault();
+            Route route = await _routeRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
             if (route != null)
             {
                 return await _routeRepository.Delete(route);
@@ -34,18 +39,23 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<Route> Update(Route route)
         {
-            return await _routeRepository.Update(route);
-
+            route.Id = 0;
+            if (route.DepartureStationId != route.DestinationStationId)
+            {
+                return await _routeRepository.Update(route);
+            }
+            return null;
         }
 
-        public Route Get(int id)
+        public async Task<Route> Get(int id)
         {
-            return _routeRepository.Get(p => p.Id == id).FirstOrDefault();
+            return await _routeRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public IEnumerable<Route> GetAll()
+        public async Task<IEnumerable<Route>> GetAll()
         {
-            return _routeRepository.GetAll();
+            IQueryable<Route> list = await _routeRepository.GetAll();
+            return list;
         }
     }
 }

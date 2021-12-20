@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Text;
 using TrainBookingPlatform.BL.Classes;
@@ -29,7 +30,7 @@ namespace TrainBookingPlatform.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TrainBookingPlatformDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TrainBookingPlatformDbContext")));
+            services.AddDbContext<TrainBookingPlatformDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("TrainBookingPlatformDbContext")));
             services.AddControllers();
             services.AddScoped<ITrainService, TrainService>();
             services.AddScoped<ITrainRepository, TrainRepository>();
@@ -65,7 +66,8 @@ namespace TrainBookingPlatform.API
                 });
 
             services.AddMvc()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+        
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>

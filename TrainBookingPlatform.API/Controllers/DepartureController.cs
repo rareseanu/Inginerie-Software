@@ -39,7 +39,7 @@ namespace TrainBookingPlatform.API.Controllers
         [HttpGet]
         public async Task<ObjectResult> GetDepartures()
         {
-            return Ok(_service.GetAll());
+            return Ok(await _service.GetAll());
         }
         [NonAction]
         public async Task<ObjectResult> GetDeparture([FromBody] Guid id)

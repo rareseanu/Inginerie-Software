@@ -11,7 +11,7 @@ namespace TrainBookingPlatform.DAL.Repository.Interfaces
     public interface IBaseRepository<T> where T : BaseEntity
     {
         IQueryable<T> Get(Expression<Func<T, bool>> predicate = null);
-        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
+        Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> predicate = null);
         Task Commit();
         Task<T> Create(T entity, bool commit = true);
         Task<T> Update(T entity, bool commit = true);
