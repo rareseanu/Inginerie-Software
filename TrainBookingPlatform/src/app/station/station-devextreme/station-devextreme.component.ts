@@ -29,7 +29,7 @@ export class StationDevextremeComponent {
       .subscribe(data => this.dataSource = <Station[]>data);
   }
 
-  removeStation(data: any) {
+  remove(data: any) {
     var station: Station = data.data;
     this.http.delete(`https://localhost:44367/api/station/${station.id}`, { withCredentials: true, responseType: 'text' }).pipe(
       tap(() => {
@@ -38,7 +38,7 @@ export class StationDevextremeComponent {
     ).subscribe();
   }
 
-  addStation(data: any) {
+  add(data: any) {
     var station: Station = data.data;
     this.http.post(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text'}).pipe(
       tap(() => {
@@ -47,7 +47,7 @@ export class StationDevextremeComponent {
     ).subscribe();
   }
 
-  updateStation(data: any) {
+  update(data: any) {
     var station: Station = Object.assign(data.oldData, data.newData);
     console.log(station);
     this.http.put(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text' }).pipe(

@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using TrainBookingPlatform.TL.DTOs;
+using TrainBookingPlatform.BL.Interfaces;
+using TrainBookingPlatform.DAL.Entities;
 
 namespace TrainBookingPlatform.API.Controllers
 {
@@ -9,28 +10,38 @@ namespace TrainBookingPlatform.API.Controllers
     [Route("api/route")]
     public class RouteController : Controller
     {
-        [NonAction]
-        public async Task<ObjectResult> AddRoute([FromBody] RouteDTO routeDTO)
+        private IRouteService _service;
+
+        public RouteController(IRouteService service)
         {
-            return Ok(routeDTO);
+            _service = service;
         }
-        [NonAction]
-        public async Task<ObjectResult> UpdateRoute([FromBody] RouteDTO routeDTO)
+
+        [HttpPost]
+        public async Task<ObjectResult> AddRoute([FromBody] Route route)
         {
-            return Ok(routeDTO);
+            await _service.Add(route);
+            return Ok("added");
         }
-        [NonAction]
-        public async Task<ObjectResult> RemoveRoute([FromBody] RouteDTO routeDTO)
+        [HttpPut]
+        public async Task<ObjectResult> UpdateRoute([FromBody] Route route)
         {
-            return Ok(routeDTO);
+            await _service.Update(route);
+            return Ok("updated");
         }
-        [NonAction]
+        [HttpDelete("{id}")]
+        public async Task<ObjectResult> RemoveRoute([FromRoute] int id)
+        {
+            await _service.Delete(id);
+            return Ok("removed");
+        }
+        [HttpGet]
         public async Task<ObjectResult> GetRoutes()
         {
-            return Ok(null);
+            return Ok(_service.GetAll());
         }
         [NonAction]
-        public async Task<ObjectResult> GetRoutes([FromBody] Guid id)
+        public async Task<ObjectResult> GetRoute([FromBody] Guid id)
         {
             return Ok(null);
         }

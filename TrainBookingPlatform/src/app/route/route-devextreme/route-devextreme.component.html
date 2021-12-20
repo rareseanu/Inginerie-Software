@@ -16,7 +16,7 @@
         [allowDeleting]="true"
       >
         <dxo-popup
-          title="Station Info"
+          title="Departure Info"
           [showTitle]="true"
           [width]="700"
           [height]="525"
@@ -24,14 +24,20 @@
         </dxo-popup>
         <dxo-form>
           <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-            <dxi-item dataField="name"></dxi-item>
-            <dxi-item dataField="numberOfLines"></dxi-item>
+            <dxi-item dataField="departureStation"></dxi-item>
+            <dxi-item dataField="destinationStation"></dxi-item>
           </dxi-item>
         </dxo-form>
       </dxo-editing>
   
-      <dxi-column dataField="name" caption="Name"></dxi-column>
-      <dxi-column dataField="numberOfLines" caption="Number of lines"></dxi-column>
+      <dxi-column dataField="departureStation" caption="Departure">
+        <dxo-lookup [dataSource]="stations" displayExpr="name" valueExpr="id">
+        </dxo-lookup>
+      </dxi-column>
+      <dxi-column dataField="destinationStation" caption="Destination">
+        <dxo-lookup [dataSource]="stations" displayExpr="name" valueExpr="id">
+        </dxo-lookup>
+      </dxi-column>
     </dx-data-grid>
   </div>
   
