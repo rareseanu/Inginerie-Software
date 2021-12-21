@@ -1,0 +1,48 @@
+<div id="data-grid">
+    <dx-data-grid
+      id="gridContainer"
+      [dataSource]="dataSource"
+      keyExpr="id"
+      [showBorders]="true"
+      (onRowRemoving)="remove($event)"
+      (onRowInserting)="add($event)"
+      (onRowUpdating)="update($event)"
+    >
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-editing
+        mode="popup"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+      >
+        <dxo-popup
+          title="Departure Info"
+          [showTitle]="true"
+          [width]="700"
+          [height]="525"
+        >
+        </dxo-popup>
+        <dxo-form>
+          <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+            <dxi-item dataField="routeId"></dxi-item>
+            <dxi-item dataField="departureTime"></dxi-item>
+            <dxi-item dataField="arrivalTime"></dxi-item>
+            <dxi-item dataField="trainId"></dxi-item>
+            
+          </dxi-item>
+        </dxo-form>
+      </dxo-editing>
+  
+      <dxi-column dataField="routeId" caption="Route" alignment="left">
+        <dxo-lookup [dataSource]="routes" displayExpr="id" valueExpr="id">
+        </dxo-lookup>
+      </dxi-column>
+      <dxi-column dataField="departureTime" caption="Departure Time" dataType="date" alignment="left"></dxi-column>
+      <dxi-column dataField="arrivalTime" caption="Arrival Time" dataType="date" alignment="left"></dxi-column>
+      <dxi-column dataField="trainId" caption="Train" alignment="left">
+        <dxo-lookup [dataSource]="trains" displayExpr="number" valueExpr="id">
+        </dxo-lookup>
+      </dxi-column>
+    </dx-data-grid>
+  </div>
+  

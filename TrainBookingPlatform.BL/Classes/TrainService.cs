@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
@@ -20,7 +21,7 @@ namespace TrainBookingPlatform.BL.Classes
         }
         public async Task<Train> Delete(int id)
         {
-            Train train = _trainRepository.Get(p => p.Id == id).FirstOrDefault();
+            Train train = await _trainRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
             if (train != null)
             {
                 return await _trainRepository.Delete(train);
@@ -32,13 +33,13 @@ namespace TrainBookingPlatform.BL.Classes
             return await _trainRepository.Update(train);
         }
 
-        public Train Get(int id)
+        public async Task<Train> Get(int id)
         {
-            return _trainRepository.Get(p => p.Id == id).FirstOrDefault();
+            return await _trainRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
         }
-        public IEnumerable<Train> GetAll()
+        public async Task<IEnumerable<Train>> GetAll()
         {
-            return _trainRepository.GetAll();
+            return await _trainRepository.GetAll();
         }
     }
 }

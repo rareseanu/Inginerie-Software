@@ -1,12 +1,12 @@
-<div id="data-grid-demo">
+<div id="data-grid">
     <dx-data-grid
       id="gridContainer"
       [dataSource]="dataSource"
       keyExpr="id"
       [showBorders]="true"
-      (onRowRemoving)="removeStation($event)"
-      (onRowInserting)="addStation($event)"
-      (onRowUpdating)="updateStation($event)"
+      (onRowRemoving)="remove($event)"
+      (onRowInserting)="add($event)"
+      (onRowUpdating)="update($event)"
     >
       <dxo-paging [enabled]="false"></dxo-paging>
       <dxo-editing
@@ -30,8 +30,8 @@
         </dxo-form>
       </dxo-editing>
   
-      <dxi-column dataField="name" caption="Name"></dxi-column>
-      <dxi-column dataField="numberOfLines" caption="Number of lines"></dxi-column>
+      <dxi-column dataField="name" caption="Name" alignment="left"></dxi-column>
+      <dxi-column dataField="numberOfLines" caption="Number of lines" alignment="left"></dxi-column>
     </dx-data-grid>
   </div>
   

@@ -10,11 +10,11 @@ namespace TrainBookingPlatform.BL.Interfaces
         public Task<User> Add(User user);
         public Task<User> Delete(int id);
         public Task<User> Update(User user);
-        public User Get(int id);
+        public Task<User> Get(int id);
         public Task<LoginResponseDTO> Login(string email, string password);
         public Task<LoginResponseDTO> RefreshToken(string refreshToken);
         public Task<User> Register(string email, string password);
-        public IEnumerable<User> GetAll();
+        public Task<IEnumerable<User>> GetAll();
         public Task RevokeToken(string token);
     }
 }

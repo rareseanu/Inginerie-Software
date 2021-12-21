@@ -9,7 +9,7 @@ namespace TrainBookingPlatform.BL.Interfaces
         public Task<Station> Add(Station station);
         public Task<Station> Delete(int id);
         public Task<Station> Update(Station station);
-        public Station Get(int id);
-        public IEnumerable<Station> GetAll();
+        public Task<Station> Get(int id);
+        public Task<IEnumerable<Station>> GetAll();
     }
 }

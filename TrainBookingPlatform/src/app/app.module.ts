@@ -12,6 +12,12 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { HomeComponent } from './home/home.component';
 import { StationComponent } from './station/station.component';
 import { StationDevextremeComponent } from './station/station-devextreme/station-devextreme.component';
+import { TrainComponent } from './train/train.component';
+import { TrainDevextremeComponent } from './train/train-devextreme/train-devextreme.component';
+import { DepartureComponent } from './departure/departure.component';
+import { DepartureDevextremeComponent } from './departure/departure-devextreme/departure-devextreme.component';
+import { RouteComponent } from './route/route.component';
+import { RouteDevextremeComponent } from './route/route-devextreme/route-devextreme.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +27,13 @@ import { StationDevextremeComponent } from './station/station-devextreme/station
     UserManagementComponent,
     HomeComponent,
     StationComponent,
-    StationDevextremeComponent
+    StationDevextremeComponent,
+    TrainComponent,
+    TrainDevextremeComponent,
+    DepartureComponent,
+    DepartureDevextremeComponent,
+    RouteComponent,
+    RouteDevextremeComponent
   ],
   imports: [
     BrowserModule,

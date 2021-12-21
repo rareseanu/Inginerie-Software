@@ -31,7 +31,7 @@ namespace TrainBookingPlatform.BL.Classes
         }
         public async Task<User> Delete(int id)
         {
-            User user = _userRepository.Get(p => p.Id == id).FirstOrDefault();
+            User user = await _userRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
             if (user != null)
             {
                 return await _userRepository.Delete(user);
@@ -43,13 +43,13 @@ namespace TrainBookingPlatform.BL.Classes
             return await _userRepository.Update(user);
         }
 
-        public User Get(int id)
+        public async Task<User> Get(int id)
         {
-            return _userRepository.Get(p => p.Id == id).FirstOrDefault();
+            return await _userRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
         }
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            return _userRepository.GetAll();
+            return await _userRepository.GetAll();
         }
 
         public async Task<LoginResponseDTO> Login(string email, string password)
@@ -57,7 +57,7 @@ namespace TrainBookingPlatform.BL.Classes
             using (SHA512 encryption = SHA512.Create())
             {
                 password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password)));
-                User existingUser = _userRepository.Get(p => p.EmailAddress == email && p.Password == password).Include(p => p.Role).FirstOrDefault();
+                User existingUser = await _userRepository.Get(p => p.EmailAddress == email && p.Password == password).Include(p => p.Role).FirstOrDefaultAsync();
                 if (existingUser != null)
                 {
                     RefreshToken refreshToken = new RefreshToken()
@@ -83,11 +83,11 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<LoginResponseDTO> RefreshToken(string refreshToken)
         {
-            RefreshToken existingRefreshToken = _refreshTokenRepository.Get(p => p.Token.Equals(refreshToken)).FirstOrDefault();
+            RefreshToken existingRefreshToken = await _refreshTokenRepository.Get(p => p.Token.Equals(refreshToken)).FirstOrDefaultAsync();
 
             if (existingRefreshToken != null)
             {
-                User user = _userRepository.Get(p => p.Id == existingRefreshToken.UserId).Include(p => p.Role).FirstOrDefault();
+                User user = await _userRepository.Get(p => p.Id == existingRefreshToken.UserId).Include(p => p.Role).FirstOrDefaultAsync();
                 RefreshToken newRefreshToken = new RefreshToken()
                 {
                     Token = GenerateToken(),
@@ -95,7 +95,7 @@ namespace TrainBookingPlatform.BL.Classes
                     UserId = existingRefreshToken.UserId
                 };
 
-                _refreshTokenRepository.Delete(existingRefreshToken);
+                await _refreshTokenRepository.Delete(existingRefreshToken);
                 await _refreshTokenRepository.Create(newRefreshToken);
 
                 return new LoginResponseDTO()
@@ -145,7 +145,7 @@ namespace TrainBookingPlatform.BL.Classes
             using (SHA512 encryption = SHA512.Create())
             {
                 User user = new User() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
-                User existingUser = _userRepository.Get(p => p.EmailAddress == email).FirstOrDefault();
+                User existingUser = await _userRepository.Get(p => p.EmailAddress == email).FirstOrDefaultAsync();
                 if (existingUser == null)
                 {
                     user = await Add(user);
@@ -157,11 +157,11 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task RevokeToken(string token)
         {
-            var refreshToken = _refreshTokenRepository.Get(p => p.Token.Equals(token)).FirstOrDefault();
+            var refreshToken = await _refreshTokenRepository.Get(p => p.Token.Equals(token)).FirstOrDefaultAsync();
 
             if (refreshToken != null)
             {
-                _refreshTokenRepository.Delete(refreshToken);
+                await _refreshTokenRepository.Delete(refreshToken);
             }
         }
 

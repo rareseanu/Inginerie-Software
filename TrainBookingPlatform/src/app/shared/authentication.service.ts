@@ -39,7 +39,6 @@ export class AuthenticationService {
                     this.currentUserSubject.next(data);
                     this.startRefreshTokenTimer();
                     console.log("User logged in.");
-                    console.log(data);
                 }),
             );
     }
@@ -68,11 +67,13 @@ export class AuthenticationService {
         return this.http.put<User>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
             .pipe(
                 tap(data => {
-                    data.role = this.getCurrentUserRole(data.token);
-                    data.email = this.getCurrentUserEmail(data.token);
-                    this.currentUserSubject.next(data);
-                    this.startRefreshTokenTimer();
-                    console.log("Token refreshed.");
+                    if(data!=null){
+                        data.role = this.getCurrentUserRole(data.token);
+                        data.email = this.getCurrentUserEmail(data.token);
+                        this.currentUserSubject.next(data);
+                        this.startRefreshTokenTimer();
+                        console.log("Token refreshed.");
+                    }
                 })
             );
     }
@@ -80,7 +81,6 @@ export class AuthenticationService {
     private startRefreshTokenTimer() {
         if (this.getCurrentUser) {
             const jwtToken = JSON.parse(atob(this.getCurrentUser.token.split('.')[1]));
-            console.log(jwtToken);
             const expires = new Date(jwtToken.exp * 1000);
             const timeout = expires.getTime() - Date.now() - (5 * 1000);
             this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);

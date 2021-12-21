@@ -1,0 +1,36 @@
+<div id="data-grid">
+    <dx-data-grid
+      id="gridContainer"
+      [dataSource]="dataSource"
+      keyExpr="id"
+      [showBorders]="true"
+      (onRowRemoving)="remove($event)"
+      (onRowInserting)="add($event)"
+      (onRowUpdating)="update($event)"
+    >
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-editing
+        mode="popup"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+      >
+        <dxo-popup
+          title="Train Info"
+          [showTitle]="true"
+          [width]="700"
+          [height]="525"
+        >
+        </dxo-popup>
+        <dxo-form>
+          <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+            <dxi-item dataField="number"></dxi-item>
+          </dxi-item>
+        </dxo-form>
+      </dxo-editing>
+  
+      <dxi-column [width]="200" dataField="number" caption="Number" alignment="left">
+      </dxi-column>
+    </dx-data-grid>
+  </div>
+  
