@@ -6,7 +6,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouteComponent } from './route/route.component';
 import { StationComponent } from './station/station.component';
-import { TicketComponent } from './ticket/ticket.component';
 import { TrainComponent } from './train/train.component';
 
 const routes: Routes = [
@@ -16,8 +15,8 @@ const routes: Routes = [
   { path: 'departure', component: DepartureComponent },
   { path: 'route', component: RouteComponent },
   { path: 'station', component: StationComponent },
-  { path: 'ticket', component: TicketComponent },
   { path: 'train', component: TrainComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({

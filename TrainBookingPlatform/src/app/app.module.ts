@@ -14,8 +14,6 @@ import { StationComponent } from './station/station.component';
 import { StationDevextremeComponent } from './station/station-devextreme/station-devextreme.component';
 import { TrainComponent } from './train/train.component';
 import { TrainDevextremeComponent } from './train/train-devextreme/train-devextreme.component';
-import { TicketComponent } from './ticket/ticket.component';
-import { TicketDevextremeComponent } from './ticket/ticket-devextreme/ticket-devextreme.component';
 import { DepartureComponent } from './departure/departure.component';
 import { DepartureDevextremeComponent } from './departure/departure-devextreme/departure-devextreme.component';
 import { RouteComponent } from './route/route.component';
@@ -32,8 +30,6 @@ import { RouteDevextremeComponent } from './route/route-devextreme/route-devextr
     StationDevextremeComponent,
     TrainComponent,
     TrainDevextremeComponent,
-    TicketComponent,
-    TicketDevextremeComponent,
     DepartureComponent,
     DepartureDevextremeComponent,
     RouteComponent,

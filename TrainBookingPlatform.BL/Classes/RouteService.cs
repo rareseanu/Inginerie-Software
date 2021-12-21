@@ -39,7 +39,6 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<Route> Update(Route route)
         {
-            route.Id = 0;
             if (route.DepartureStationId != route.DestinationStationId)
             {
                 return await _routeRepository.Update(route);

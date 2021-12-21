@@ -16,7 +16,7 @@
         [allowDeleting]="true"
       >
         <dxo-popup
-          title="Departure Info"
+          title="Route Info"
           [showTitle]="true"
           [width]="700"
           [height]="525"
@@ -30,11 +30,11 @@
         </dxo-form>
       </dxo-editing>
   
-      <dxi-column dataField="departureStationId" caption="Departure">
+      <dxi-column dataField="departureStationId" caption="Departure" alignment="left">
         <dxo-lookup [dataSource]="stations" displayExpr="name" valueExpr="id">
         </dxo-lookup>
       </dxi-column>
-      <dxi-column dataField="destinationStationId" caption="Destination">
+      <dxi-column dataField="destinationStationId" caption="Destination" alignment="left">
         <dxo-lookup [dataSource]="stations" displayExpr="name" valueExpr="id">
         </dxo-lookup>
       </dxi-column>

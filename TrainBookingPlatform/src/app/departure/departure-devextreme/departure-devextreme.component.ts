@@ -4,6 +4,7 @@ import { tap } from 'rxjs';
 import { Departure } from 'src/app/shared/departure.model';
 import { Route } from 'src/app/shared/route.model';
 import { Station } from 'src/app/shared/station.model';
+import { Train } from 'src/app/shared/train.model';
 
 @Component({
   selector: 'departure-devextreme',
@@ -13,14 +14,22 @@ import { Station } from 'src/app/shared/station.model';
 export class DepartureDevextremeComponent {
   dataSource: Departure[];
   routes: Route[];
+  trains: Train[];
 
   constructor(private http: HttpClient) {
+    this.getRoutes();
+    this.getTrains();
     this.getDepartures();
   }
 
   getRoutes() {
     this.http.get(`https://localhost:44367/api/route/`, { withCredentials: true })
       .subscribe(data => this.routes = <Route[]>data);
+  }
+
+  getTrains() {
+    this.http.get(`https://localhost:44367/api/train/`, { withCredentials: true })
+      .subscribe(data => this.trains = <Train[]>data);
   }
 
   getDepartures() {
