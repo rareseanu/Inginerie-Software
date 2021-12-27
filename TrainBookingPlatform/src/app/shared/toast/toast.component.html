@@ -1,0 +1,11 @@
+<div class="toast-container">
+  <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" *ngFor="let toast of toastService.toasts">
+    <div class="toast-header">
+      <strong class="me-auto">{{toast.title}}</strong>
+      <button (click)="onClick(toast)" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      {{toast.message}}
+    </div>
+  </div>
+</div>

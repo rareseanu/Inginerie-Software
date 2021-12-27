@@ -61,7 +61,7 @@ namespace TrainBookingPlatform.API.Controllers
             if (Request.Cookies["refreshToken"] != null)
             {
                 var result = await _userService.RefreshToken(Request.Cookies["refreshToken"]);
-                if (result != null)
+                if (result?.Value != null)
                 {
                     SetRefreshTokenCookie(result.Value.RefreshToken, result.Value.ExpiresAt);
                 }

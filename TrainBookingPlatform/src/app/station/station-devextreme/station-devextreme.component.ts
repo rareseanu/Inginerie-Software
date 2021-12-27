@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Observable, tap } from 'rxjs';
 import { Station } from 'src/app/shared/station.model';
+import { ToastService } from 'src/app/shared/toast.service';
+import { ToastComponent } from 'src/app/shared/toast/toast.component';
 
 if (!/localhost/.test(document.location.host)) {
   enableProdMode();
@@ -18,7 +20,7 @@ if (!/localhost/.test(document.location.host)) {
 export class StationDevextremeComponent {
   dataSource: Station[];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastService: ToastService) {
     this.getStations();
   }
 
@@ -31,6 +33,7 @@ export class StationDevextremeComponent {
     var station: Station = data.data;
     this.http.delete(`https://localhost:44367/api/station/${station.id}`, { withCredentials: true, responseType: 'text' }).pipe(
       tap(() => {
+        
         this.getStations();
       }),
     ).subscribe();
@@ -41,6 +44,7 @@ export class StationDevextremeComponent {
     this.http.post(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text'}).pipe(
       tap(() => {
         this.getStations();
+        this.toastService.addToast("Test", "Succes bitch");
       }),
     ).subscribe();
   }
