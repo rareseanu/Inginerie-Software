@@ -31,14 +31,16 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string): Observable<User> {
-        return this.http.post<User>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true })
+        return this.http.post<User>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true})
             .pipe(
                 tap(data => {
-                    data.role = this.getCurrentUserRole(data.token);
-                    data.email = this.getCurrentUserEmail(data.token);
-                    this.currentUserSubject.next(data);
-                    this.startRefreshTokenTimer();
-                    console.log("User logged in.");
+                    if(data != null){
+                        data.role = this.getCurrentUserRole(data.token);
+                        data.email = this.getCurrentUserEmail(data.token);
+                        this.currentUserSubject.next(data);
+                        this.startRefreshTokenTimer();
+                        console.log("User logged in.");
+                    }
                 }),
             );
     }

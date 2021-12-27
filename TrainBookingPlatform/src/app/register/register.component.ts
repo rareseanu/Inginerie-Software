@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Credentials } from '../credentials';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../shared/authentication.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -37,8 +38,10 @@ export class RegisterComponent implements OnInit {
     this.authenticationService.register(this.f['email'].value, this.f['password'].value)
         .subscribe(
             (data) => {
+              if(data != null){
                 this.registered = true;
                 console.log(data);
+              }
             },
             (error) => {
               console.log(error);
