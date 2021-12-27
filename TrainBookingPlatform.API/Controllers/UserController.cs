@@ -30,7 +30,7 @@ namespace TrainBookingPlatform.API.Controllers
         [HttpPut("register")]
         public async Task<ObjectResult> Register([FromBody] LoginDTO loginDTO)
         {
-            return Ok(_userService.Register(loginDTO.Email, loginDTO.Password));
+            return Ok(await _userService.Register(loginDTO.Email, loginDTO.Password));
         }
 
         [HttpDelete("delete")]
@@ -47,6 +47,10 @@ namespace TrainBookingPlatform.API.Controllers
         public async Task<ObjectResult> Login([FromBody] LoginDTO loginDTO)
         {
             var result = await _userService.Login(loginDTO.Email, loginDTO.Password);
+            if (result == null)
+            {
+                return Ok(null);
+            }
             SetRefreshTokenCookie(result.RefreshToken, result.ExpiresAt);
             return Ok(result);
         }
