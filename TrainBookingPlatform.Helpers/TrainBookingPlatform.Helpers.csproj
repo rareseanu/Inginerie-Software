@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TrainBookingPlatform.DAL\TrainBookingPlatform.DAL.csproj" />
-    <ProjectReference Include="..\TrainBookingPlatform.Helpers\TrainBookingPlatform.Helpers.csproj" />
     <ProjectReference Include="..\TrainBookingPlatform.TL\TrainBookingPlatform.TL.csproj" />
   </ItemGroup>
 

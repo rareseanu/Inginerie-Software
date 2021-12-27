@@ -1,8 +1,10 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
+using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.API.Controllers
 {
@@ -18,15 +20,15 @@ namespace TrainBookingPlatform.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ObjectResult> AddRoute([FromBody] Route route)
-        {
-            await _service.Add(route);
+        public async Task<ObjectResult> AddRoute([FromBody] RouteDTO routeDTO)
+        {    
+            await _service.Add(routeDTO);
             return Ok("added");
         }
         [HttpPut]
-        public async Task<ObjectResult> UpdateRoute([FromBody] Route route)
+        public async Task<ObjectResult> UpdateRoute([FromBody] RouteDTO routeDTO)
         {
-            await _service.Update(route);
+            await _service.Update(routeDTO);
             return Ok("updated");
         }
         [HttpDelete("{id}")]

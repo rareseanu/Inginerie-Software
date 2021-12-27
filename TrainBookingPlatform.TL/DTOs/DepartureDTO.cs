@@ -2,7 +2,7 @@
 
 namespace TrainBookingPlatform.TL.DTOs
 {
-    public class DepartureDTO
+    public class DepartureDTO : BaseDTO
     {
         public int RouteId { get; set; }
         public RouteDTO Route { get; set; }

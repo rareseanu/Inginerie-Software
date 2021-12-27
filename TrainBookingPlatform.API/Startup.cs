@@ -15,6 +15,7 @@ using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Repository;
 using TrainBookingPlatform.DAL.Repository.Classes;
 using TrainBookingPlatform.DAL.Repository.Interfaces;
+using TrainBookingPlatform.Helpers.AutoMapper;
 
 namespace TrainBookingPlatform.API
 {
@@ -45,7 +46,7 @@ namespace TrainBookingPlatform.API
             services.AddScoped<IStationService, StationService>();
             services.AddScoped<IDepartureRepository, DepartureRepository>();
             services.AddScoped<IDepartureService, DepartureService>();
-
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -10,10 +10,6 @@ export class AppComponent implements OnInit {
   title = 'TrainBookingPlatform';
   toggleRegister = false;
 
-  ngOnInit() {
-    this.authenticationService.refreshToken().subscribe();
-  }
-
   constructor(public authenticationService: AuthenticationService) {}
 
   ngOnInit() {
