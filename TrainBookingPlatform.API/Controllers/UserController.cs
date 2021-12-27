@@ -47,11 +47,11 @@ namespace TrainBookingPlatform.API.Controllers
         public async Task<ObjectResult> Login([FromBody] LoginDTO loginDTO)
         {
             var result = await _userService.Login(loginDTO.Email, loginDTO.Password);
-            if (result == null)
+            if (result.Value == null)
             {
-                return Ok(null);
+                return Ok(result);
             }
-            SetRefreshTokenCookie(result.RefreshToken, result.ExpiresAt);
+            SetRefreshTokenCookie(result.Value.RefreshToken, result.Value.ExpiresAt);
             return Ok(result);
         }
 
@@ -63,7 +63,7 @@ namespace TrainBookingPlatform.API.Controllers
                 var result = await _userService.RefreshToken(Request.Cookies["refreshToken"]);
                 if (result != null)
                 {
-                    SetRefreshTokenCookie(result.RefreshToken, result.ExpiresAt);
+                    SetRefreshTokenCookie(result.Value.RefreshToken, result.Value.ExpiresAt);
                 }
                 else
                 {

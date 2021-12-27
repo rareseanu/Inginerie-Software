@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.DAL.Repository.Interfaces;
+using TrainBookingPlatform.TL;
 using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.BL.Classes
@@ -21,11 +22,11 @@ namespace TrainBookingPlatform.BL.Classes
             _mapper = mapper;
         }
 
-        public async Task<Station> Add(StationDTO stationDTO)
+        public async Task<Result<StationDTO>> Add(StationDTO stationDTO)
         {
             Station station = _mapper.Map<Station>(stationDTO);
             station.Id = 0;
-            return await _stationRepository.Create(station);
+            return Result<StationDTO>.Success(_mapper.Map<StationDTO>(await _stationRepository.Create(station)));
         }
 
         public async Task<Station> Delete(int id)
@@ -38,16 +39,20 @@ namespace TrainBookingPlatform.BL.Classes
             return null;
         }
 
-        public async Task<Station> Update(StationDTO stationDTO)
+        public async Task<Result<StationDTO>> Update(StationDTO stationDTO)
         {
             Station station = _mapper.Map<Station>(stationDTO);
-            return await _stationRepository.Update(station);
-
+            return Result<StationDTO>.Success(_mapper.Map<StationDTO>(await _stationRepository.Update(station)));
         }
 
-        public async Task<StationDTO> Get(int id)
+        public async Task<Result<StationDTO>> Get(int id)
         {
-            return _mapper.Map<StationDTO>(await _stationRepository.Get(p => p.Id == id).FirstOrDefaultAsync());
+            Station station = await _stationRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
+            if (station != null)
+            {
+                return Result<StationDTO>.Success(_mapper.Map<StationDTO>(station));
+            }
+            return Result<StationDTO>.Failure("Station not found.");
         }
 
         public async Task<IEnumerable<StationDTO>> GetAll()

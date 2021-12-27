@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, tap } from "rxjs";
+import { Response } from "./response.model";
 import { User } from "./user.model";
 
 @Injectable({ providedIn: 'root' })
@@ -30,16 +31,16 @@ export class AuthenticationService {
         return jwtToken.Roles;
     }
 
-    login(email: string, password: string): Observable<User> {
-        return this.http.post<User>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true})
+    login(email: string, password: string): Observable<Response> {
+        return this.http.post<Response>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true})
             .pipe(
                 tap(data => {
-                    if(data != null){
-                        data.role = this.getCurrentUserRole(data.token);
-                        data.email = this.getCurrentUserEmail(data.token);
-                        this.currentUserSubject.next(data);
+                    if(data.value != null){
+                        var user = <User> data.value;
+                        user.role = this.getCurrentUserRole(user.token);
+                        user.email = this.getCurrentUserEmail(user.token);
+                        this.currentUserSubject.next(user);
                         this.startRefreshTokenTimer();
-                        console.log("User logged in.");
                     }
                 }),
             );
@@ -56,8 +57,8 @@ export class AuthenticationService {
             );
     }
 
-    register(email: string, password: string): Observable<User> {
-        return this.http.put<User>(`https://localhost:44367/api/user/register`, { email, password }, { withCredentials: true })
+    register(email: string, password: string): Observable<Response> {
+        return this.http.put<Response>(`https://localhost:44367/api/user/register`, { email, password }, { withCredentials: true })
             .pipe(
                 tap(data => {
                     console.log("User registered.");
@@ -65,16 +66,16 @@ export class AuthenticationService {
             );
     }
 
-    refreshToken(): Observable<User> {
-        return this.http.put<User>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
+    refreshToken(): Observable<Response> {
+        return this.http.put<Response>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
             .pipe(
                 tap(data => {
-                    if(data!=null){
-                        data.role = this.getCurrentUserRole(data.token);
-                        data.email = this.getCurrentUserEmail(data.token);
-                        this.currentUserSubject.next(data);
+                    if(data.value != null){
+                        var user = <User> data.value;
+                        user.role = this.getCurrentUserRole(user.token);
+                        user.email = this.getCurrentUserEmail(user.token);
+                        this.currentUserSubject.next(user);
                         this.startRefreshTokenTimer();
-                        console.log("Token refreshed.");
                     }
                 })
             );
