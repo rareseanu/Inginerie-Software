@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.DAL.Repository.Interfaces;
+using TrainBookingPlatform.TL;
 using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.BL.Classes
@@ -19,15 +21,19 @@ namespace TrainBookingPlatform.BL.Classes
     {
         private IUserRepository _userRepository;
         private IRefreshTokenRepository _refreshTokenRepository;
+        private IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository)
+        public UserService(IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _refreshTokenRepository = refreshTokenRepository;
+            _mapper = mapper;
         }
-        public async Task<User> Add(User user)
+        public async Task<Result<UserDTO>> Add(UserDTO userDTO)
         {
-            return await _userRepository.Create(user);
+            User user = _mapper.Map<User>(userDTO);
+            User createdUser = await _userRepository.Create(user);
+            return Result<UserDTO>.Success(_mapper.Map<UserDTO>(createdUser)); 
         }
         public async Task<User> Delete(int id)
         {
@@ -38,21 +44,35 @@ namespace TrainBookingPlatform.BL.Classes
             }
             return null;
         }
-        public async Task<User> Update(User user)
+        public async Task<Result<UserDTO>> Update(UserDTO userDTO)
         {
-            return await _userRepository.Update(user);
+            User user = _mapper.Map<User>(userDTO);
+            try
+            {
+                await _userRepository.Update(user);
+                return Result<UserDTO>.Success(userDTO);
+            } catch(Exception ex)
+            {
+                return Result<UserDTO>.Failure("User update failed.");
+            }
         }
 
-        public async Task<User> Get(int id)
+        public async Task<Result<UserDTO>> Get(int id)
         {
-            return await _userRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
+            var user = await _userRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
+            if(user == null)
+            {
+                return Result<UserDTO>.Failure("User not found.");
+            }
+            return Result<UserDTO>.Success(_mapper.Map<UserDTO>(user));
         }
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<Result<IEnumerable<UserDTO>>> GetAll()
         {
-            return await _userRepository.GetAll();
+            List<User> users = await (await _userRepository.GetAll()).ToListAsync();
+            return Result<IEnumerable<UserDTO>>.Success(_mapper.Map<List<UserDTO>>(users));
         }
 
-        public async Task<LoginResponseDTO> Login(string email, string password)
+        public async Task<Result<LoginResponseDTO>> Login(string email, string password)
         {
             using (SHA512 encryption = SHA512.Create())
             {
@@ -69,19 +89,20 @@ namespace TrainBookingPlatform.BL.Classes
 
                     await _refreshTokenRepository.Create(refreshToken);
 
-                    return new LoginResponseDTO()
+                    var response = new LoginResponseDTO()
                     {
                         RefreshToken = refreshToken.Token,
                         Token = GenerateJwtToken(existingUser),
                         UserId = existingUser.Id,
                         ExpiresAt = refreshToken.ExpiresAt
                     };
+                    return Result<LoginResponseDTO>.Success(response);
                 }
-                return null;
+                return Result<LoginResponseDTO>.Failure("Invalid user credentials.");
             }
         }
 
-        public async Task<LoginResponseDTO> RefreshToken(string refreshToken)
+        public async Task<Result<LoginResponseDTO>> RefreshToken(string refreshToken)
         {
             RefreshToken existingRefreshToken = await _refreshTokenRepository.Get(p => p.Token.Equals(refreshToken)).FirstOrDefaultAsync();
 
@@ -98,15 +119,17 @@ namespace TrainBookingPlatform.BL.Classes
                 await _refreshTokenRepository.Delete(existingRefreshToken);
                 await _refreshTokenRepository.Create(newRefreshToken);
 
-                return new LoginResponseDTO()
+                var result = new LoginResponseDTO()
                 {
                     RefreshToken = newRefreshToken.Token,
                     Token = GenerateJwtToken(user),
                     UserId = user.Id,
                     ExpiresAt = newRefreshToken.ExpiresAt
                 };
+
+                return Result<LoginResponseDTO>.Success(result);
             }
-            return null;
+            return Result<LoginResponseDTO>.Failure("Expired user session.");
         }
 
         private string GenerateJwtToken(User user)
@@ -140,18 +163,17 @@ namespace TrainBookingPlatform.BL.Classes
             return Convert.ToBase64String(randomBytes);
         }
 
-        public async Task<User> Register(string email, string password)
+        public async Task<Result<UserDTO>> Register(string email, string password)
         {
             using (SHA512 encryption = SHA512.Create())
             {
-                User user = new User() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
+                UserDTO user = new UserDTO() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
                 User existingUser = await _userRepository.Get(p => p.EmailAddress == email).FirstOrDefaultAsync();
                 if (existingUser == null)
                 {
-                    user = await Add(user);
-                    return user;
+                    return await Add(user);
                 }
-                return null;
+                return Result<UserDTO>.Failure("User already existing.");
             }
         }
 
