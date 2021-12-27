@@ -25,7 +25,6 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required)
     })
-    this.authenticationService.refreshToken().subscribe();
   }
 
   onSubmit() {
