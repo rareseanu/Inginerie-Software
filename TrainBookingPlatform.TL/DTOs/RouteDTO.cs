@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace TrainBookingPlatform.TL.DTOs
 {
-    public class RouteDTO
+    public class RouteDTO : BaseDTO
     {
         public int? DestinationStationId { get; set; }
         public StationDTO DestinationStation { get; set; }

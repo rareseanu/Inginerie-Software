@@ -18,8 +18,6 @@ if (!/localhost/.test(document.location.host)) {
 export class StationDevextremeComponent {
   dataSource: Station[];
 
-  // states: State[];
-
   constructor(private http: HttpClient) {
     this.getStations();
   }
