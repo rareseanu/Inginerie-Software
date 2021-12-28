@@ -1,7 +1,9 @@
+import { Time } from "@angular/common";
+
 export class Departure {
     public id: number;
     public routeId: number;
-    public departureTime: Date;
-    public arrivalTime: Date;
+    public departureTime: Time;
+    public arrivalTime: Time;
     public trainId: number;
 }

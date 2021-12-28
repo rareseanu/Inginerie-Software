@@ -1,12 +1,12 @@
 <div id="data-grid">
     <dx-data-grid
       id="gridContainer"
-      [dataSource]="dataSource"
+      [dataSource]="trainService.dataSource"
       keyExpr="id"
       [showBorders]="true"
-      (onRowRemoving)="remove($event)"
-      (onRowInserting)="add($event)"
-      (onRowUpdating)="update($event)"
+      (onRowRemoving)="trainService.remove($event)"
+      (onRowInserting)="trainService.add($event)"
+      (onRowUpdating)="trainService.update($event)"
     >
       <dxo-paging [enabled]="false"></dxo-paging>
       <dxo-editing

@@ -19,6 +19,7 @@ import { DepartureDevextremeComponent } from './departure/departure-devextreme/d
 import { RouteComponent } from './route/route.component';
 import { RouteDevextremeComponent } from './route/route-devextreme/route-devextreme.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { TicketBookingComoponent } from './ticket-booking/ticket-booking.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ToastComponent } from './shared/toast/toast.component';
     DepartureDevextremeComponent,
     RouteComponent,
     RouteDevextremeComponent,
-    ToastComponent
+    ToastComponent,
+    TicketBookingComoponent
   ],
   imports: [
     BrowserModule,
