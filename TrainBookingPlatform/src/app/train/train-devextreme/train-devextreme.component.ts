@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
-import { Train } from 'src/app/shared/train.model';
+import { Train } from '../../shared/train.model';
+import { Response } from '../../shared/response.model';
 
 @Component({
   selector: 'train-devextreme',

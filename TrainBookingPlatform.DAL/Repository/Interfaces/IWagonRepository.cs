@@ -7,7 +7,7 @@ using TrainBookingPlatform.DAL.Entities;
 
 namespace TrainBookingPlatform.DAL.Repository.Interfaces
 {
-    public interface IWagonRepository : IBaseRepository<Wagon>
+    public interface ITrainRepository : IBaseRepository<Train>
     {
 
     }

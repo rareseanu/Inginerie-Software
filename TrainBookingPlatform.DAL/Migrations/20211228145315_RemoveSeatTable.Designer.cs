@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainBookingPlatform.DAL.Repository;
 
 namespace TrainBookingPlatform.DAL.Migrations
 {
     [DbContext(typeof(TrainBookingPlatformDbContext))]
-    partial class TrainBookingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211228145315_RemoveSeatTable")]
+    partial class RemoveSeatTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
