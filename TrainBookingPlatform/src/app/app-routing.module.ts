@@ -5,17 +5,20 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouteComponent } from './route/route.component';
+import { AuthenticationGuard } from './shared/authentication.guard';
 import { StationComponent } from './station/station.component';
+import { TicketBookingComoponent } from './ticket-booking/ticket-booking.component';
 import { TrainComponent } from './train/train.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'departure', component: DepartureComponent },
-  { path: 'route', component: RouteComponent },
-  { path: 'station', component: StationComponent },
-  { path: 'train', component: TrainComponent },
+  { path: 'departure', component: DepartureComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']} },
+  { path: 'route', component: RouteComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
+  { path: 'station', component: StationComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
+  { path: 'train', component: TrainComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
+  { path: 'ticket-booking', component: TicketBookingComoponent, canActivate: [AuthenticationGuard], data: {role: ['Client', 'Administrator']} },
   { path: '**', component: HomeComponent }
 ];
 

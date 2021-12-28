@@ -1,0 +1,46 @@
+<h2 class="mb-4 ">Ticket Booking</h2>
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label class="form-label" for="departureStation">Departure station</label>
+        <select (change)="onDepartureStationChanged()" class="form-select" aria-label="Departure station" formControlName="departureStation"
+                [ngClass]="{ 'is-invalid': submitted && f['departureStation'].errors }">
+            <option *ngFor="let station of stationService.dataSource" [ngValue]="station" >{{station.name}}</option>
+        </select>
+        <div *ngIf="submitted && f['departureStation'].errors" class="invalid-feedback">
+            <div *ngIf="f['departureStation'].errors['required']">Departure station is required</div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="arrivalStation">Arrival station</label>
+        <select (change)="onArrivalStationChanged()" class="form-select" aria-label="Arrival station" formControlName="arrivalStation"
+                [ngClass]="{ 'is-invalid': submitted && f['departureStation'].errors }">
+            <option *ngFor="let station of stationService.dataSource" [ngValue]="station" >{{station.name}}</option>
+        </select>
+        <div *ngIf="submitted && f['arrivalStation'].errors" class="invalid-feedback">
+            <div *ngIf="f['arrivalStation'].errors['required']">Arrival station is required</div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="route">Route</label>
+        <select (change)="onRouteChanged()" class="form-select" aria-label="Route" formControlName="route"
+                [ngClass]="{ 'is-invalid': submitted && f['route'].errors }">
+            <option *ngFor="let route of routeService.dataSource" value='{{route.id}}' >{{f['departureStation'].value.name}} - {{f['arrivalStation'].value.name}}</option>
+        </select>
+        <div *ngIf="submitted && f['route'].errors" class="invalid-feedback">
+            <div *ngIf="f['route'].errors['required']">Route is required</div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="departure">Departure</label>
+        <select class="form-select" aria-label="Departure" formControlName="departure"
+                [ngClass]="{ 'is-invalid': submitted && f['departure'].errors }">
+            <option *ngFor="let departure of departureService.dataSource" value='{{departure.id}}' >{{departure.departureTime}}</option>
+        </select>
+        <div *ngIf="submitted && f['departure'].errors" class="invalid-feedback">
+            <div *ngIf="f['departure'].errors['required']">Departure is required</div>
+        </div>
+    </div>
+    <button class="btn btn-primary w-100">
+        Register
+    </button>
+</form>

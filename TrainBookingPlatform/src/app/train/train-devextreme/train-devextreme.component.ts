@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
 import { Train } from 'src/app/shared/train.model';
+import { TrainService } from 'src/app/shared/train.service';
 
 @Component({
   selector: 'train-devextreme',
@@ -9,44 +10,9 @@ import { Train } from 'src/app/shared/train.model';
   styleUrls: ['./train-devextreme.component.css']
 })
 export class TrainDevextremeComponent {
-  dataSource: Train[];
 
-  constructor(private http: HttpClient) {
-    this.getTrains();
+  constructor(public trainService: TrainService) {
+    this.trainService.getTrains();
   }
 
-  getTrains() {
-    this.http.get(`https://localhost:44367/api/train/`, { withCredentials: true })
-      .subscribe(data => 
-        {
-          this.dataSource = <Train[]>data;
-        });
-  }
-
-  remove(data: any) {
-    var train: Train = data.data;
-    this.http.delete(`https://localhost:44367/api/train/${train.id}`, { withCredentials: true, responseType: 'text' }).pipe(
-      tap(() => {
-        this.getTrains();
-      }),
-    ).subscribe();
-  }
-
-  add(data: any) { 
-    var train: Train = data.data;
-    this.http.post(`https://localhost:44367/api/train/`, train, { withCredentials: true, responseType: 'text' }).pipe(
-      tap(() => {
-        this.getTrains();
-      }),
-    ).subscribe();
-  }
-
-  update(data: any) {
-    var train: Train = Object.assign(data.oldData, data.newData);
-    this.http.put(`https://localhost:44367/api/train/`, train, { withCredentials: true, responseType: 'text' }).pipe(
-      tap(() => {
-        this.getTrains();
-      }),
-    ).subscribe();
-  }
 }
