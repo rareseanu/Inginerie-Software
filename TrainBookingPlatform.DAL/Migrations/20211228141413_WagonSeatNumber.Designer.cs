@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainBookingPlatform.DAL.Repository;
 
 namespace TrainBookingPlatform.DAL.Migrations
 {
     [DbContext(typeof(TrainBookingPlatformDbContext))]
-    partial class TrainBookingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211228141413_WagonSeatNumber")]
+    partial class WagonSeatNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,6 +109,26 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.ToTable("Routes");
                 });
 
+            modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Seat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WagonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WagonId");
+
+                    b.ToTable("Seats");
+                });
+
             modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Station", b =>
                 {
                     b.Property<int>("Id")
@@ -141,7 +163,7 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.Property<DateTime>("PurchasedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SeatNumber")
+                    b.Property<int>("SeatId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -150,6 +172,8 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepartureId");
+
+                    b.HasIndex("SeatId");
 
                     b.HasIndex("UserId");
 
@@ -266,11 +290,26 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.Navigation("DestinationStation");
                 });
 
+            modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Seat", b =>
+                {
+                    b.HasOne("TrainBookingPlatform.DAL.Entities.Wagon", "Wagon")
+                        .WithMany("Seats")
+                        .HasForeignKey("WagonId");
+
+                    b.Navigation("Wagon");
+                });
+
             modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Ticket", b =>
                 {
                     b.HasOne("TrainBookingPlatform.DAL.Entities.Departure", "Departure")
                         .WithMany("Tickets")
                         .HasForeignKey("DepartureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrainBookingPlatform.DAL.Entities.Seat", "Seat")
+                        .WithMany("Tickets")
+                        .HasForeignKey("SeatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -281,6 +320,8 @@ namespace TrainBookingPlatform.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Departure");
+
+                    b.Navigation("Seat");
 
                     b.Navigation("User");
                 });
@@ -322,6 +363,11 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.Navigation("Departures");
                 });
 
+            modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Seat", b =>
+                {
+                    b.Navigation("Tickets");
+                });
+
             modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Station", b =>
                 {
                     b.Navigation("DepartureRoutes");
@@ -341,6 +387,11 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.Navigation("RefreshTokens");
 
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Wagon", b =>
+                {
+                    b.Navigation("Seats");
                 });
 #pragma warning restore 612, 618
         }
