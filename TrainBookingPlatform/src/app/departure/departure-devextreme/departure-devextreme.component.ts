@@ -16,6 +16,10 @@ import { TrainService } from 'src/app/shared/train.service';
 })
 export class DepartureDevextremeComponent {
   constructor(public departureService: DepartureService, public trainService: TrainService, public routeService: RouteService) {
+
+  }
+
+  ngOnInit() {
     this.departureService.getDepartures();
     this.routeService.getRoutes();
     this.trainService.getTrains();

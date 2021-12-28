@@ -8,9 +8,9 @@ using TrainBookingPlatform.DAL.Repository.Interfaces;
 
 namespace TrainBookingPlatform.DAL.Repository.Classes
 {
-    public class WagonRepository : BaseRepository<Wagon> , IWagonRepository
+    public class TrainRepository : BaseRepository<Train> , ITrainRepository
     {
-        public WagonRepository(TrainBookingPlatformDbContext dbContext) : base(dbContext)
+        public TrainRepository(TrainBookingPlatformDbContext dbContext) : base(dbContext)
         {
 
         }

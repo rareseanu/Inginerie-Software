@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
-import { Train } from 'src/app/shared/train.model';
 import { TrainService } from 'src/app/shared/train.service';
 
 @Component({
