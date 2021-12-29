@@ -2,9 +2,9 @@
 <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
         <label class="form-label" for="departureStation">Departure station</label>
-        <select (change)="onDepartureStationChanged()" class="form-select" aria-label="Departure station" formControlName="departureStation"
-                [ngClass]="{ 'is-invalid': submitted && f['departureStation'].errors }">
-            <option *ngFor="let station of stationService.dataSource" [ngValue]="station" >{{station.name}}</option>
+        <select (change)="onDepartureStationChanged()" class="form-select" aria-label="Departure station"
+            formControlName="departureStation" [ngClass]="{ 'is-invalid': submitted && f['departureStation'].errors }">
+            <option *ngFor="let station of stationService.dataSource" [ngValue]="station">{{station.name}}</option>
         </select>
         <div *ngIf="submitted && f['departureStation'].errors" class="invalid-feedback">
             <div *ngIf="f['departureStation'].errors['required']">Departure station is required</div>
@@ -12,9 +12,9 @@
     </div>
     <div class="mb-3">
         <label class="form-label" for="arrivalStation">Arrival station</label>
-        <select (change)="onArrivalStationChanged()" class="form-select" aria-label="Arrival station" formControlName="arrivalStation"
-                [ngClass]="{ 'is-invalid': submitted && f['departureStation'].errors }">
-            <option *ngFor="let station of stationService.dataSource" [ngValue]="station" >{{station.name}}</option>
+        <select (change)="onArrivalStationChanged()" class="form-select" aria-label="Arrival station"
+            formControlName="arrivalStation" [ngClass]="{ 'is-invalid': submitted && f['departureStation'].errors }">
+            <option *ngFor="let station of stationService.dataSource" [ngValue]="station">{{station.name}}</option>
         </select>
         <div *ngIf="submitted && f['arrivalStation'].errors" class="invalid-feedback">
             <div *ngIf="f['arrivalStation'].errors['required']">Arrival station is required</div>
@@ -23,8 +23,9 @@
     <div class="mb-3">
         <label class="form-label" for="route">Route</label>
         <select (change)="onRouteChanged()" class="form-select" aria-label="Route" formControlName="route"
-                [ngClass]="{ 'is-invalid': submitted && f['route'].errors }">
-            <option *ngFor="let route of routeService.dataSource" value='{{route.id}}' >{{f['departureStation'].value.name}} - {{f['arrivalStation'].value.name}}</option>
+            [ngClass]="{ 'is-invalid': submitted && f['route'].errors }">
+            <option *ngFor="let route of routeService.dataSource" value='{{route.id}}'>
+                {{f['departureStation'].value.name}} - {{f['arrivalStation'].value.name}}</option>
         </select>
         <div *ngIf="submitted && f['route'].errors" class="invalid-feedback">
             <div *ngIf="f['route'].errors['required']">Route is required</div>
@@ -32,15 +33,63 @@
     </div>
     <div class="mb-3">
         <label class="form-label" for="departure">Departure</label>
-        <select class="form-select" aria-label="Departure" formControlName="departure"
-                [ngClass]="{ 'is-invalid': submitted && f['departure'].errors }">
-            <option *ngFor="let departure of departureService.dataSource" value='{{departure.id}}' >{{departure.departureTime}}</option>
+        <select (change)="onDepartureChanged()" class="form-select" aria-label="Departure" formControlName="departure"
+            [ngClass]="{ 'is-invalid': submitted && f['departure'].errors }">
+            <option *ngFor="let departure of departureService.dataSource" [ngValue]="departure">
+                {{departure.departureTime}}</option>
         </select>
         <div *ngIf="submitted && f['departure'].errors" class="invalid-feedback">
             <div *ngIf="f['departure'].errors['required']">Departure is required</div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="wagon">Wagon</label>
+        <select class="form-select" aria-label="Wagon" formControlName="wagon"
+            [ngClass]="{ 'is-invalid': submitted && f['wagon'].errors }">
+            <option *ngFor="let wagon of wagonService.dataSource" [ngValue]="wagon">{{wagon.number}}</option>
+        </select>
+        <div *ngIf="submitted && f['wagon'].errors" class="invalid-feedback">
+            <div *ngIf="f['wagon'].errors['required']">Wagon is required</div>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button (click)="onChooseSeatClicked()" #myModal data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-outline-secondary"
+                type="button">Choose
+                Seat</button>
+        </div>
+        <input formControlName="seat" type="text" class="form-control" placeholder="" aria-label=""
+            aria-describedby="basic-addon1">
+        <div *ngIf="submitted && f['seat'].errors" class="invalid-feedback">
+            <div *ngIf="f['seat'].errors['required']">Seat is required</div>
         </div>
     </div>
     <button class="btn btn-primary w-100">
         Register
     </button>
 </form>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row text-center" *ngFor="let line of seats">
+                        <button [disabled]="line[0].isOccupied" [ngClass]="{'btn-danger': line[0].isOccupied}" (click)="onSeatClick(line[0].seatNumber)" *ngIf="line[0]" type="button" class="seat-button col-md-2 btn btn-primary">{{line[0].seatNumber}}</button>
+                        <button [disabled]="line[1].isOccupied" [ngClass]="{'btn-danger': line[1].isOccupied}" (click)="onSeatClick(line[1].seatNumber)" *ngIf="line[1]" type="button" class="seat-button col-md-2 btn btn-primary">{{line[1].seatNumber}}</button>
+                        <div class="col-md-4"></div>
+                        <button [disabled]="line[2].isOccupied" [ngClass]="{'btn-danger': line[2].isOccupied}" (click)="onSeatClick(line[2].seatNumber)" *ngIf="line[2]" type="button" class="seat-button col-md-2 btn btn-primary">{{line[2].seatNumber}}</button>
+                        <button [disabled]="line[3].isOccupied"[ngClass]="{'btn-danger': line[3].isOccupied}" (click)="onSeatClick(line[3].seatNumber)" *ngIf="line[3]" type="button" class="seat-button col-md-2 btn btn-primary">{{line[3].seatNumber}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

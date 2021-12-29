@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
@@ -41,6 +42,13 @@ namespace TrainBookingPlatform.API.Controllers
         {
             return Ok(await _service.GetAll());
         }
+
+        [HttpGet("by-departure/{departureID}")]
+        public async Task<ObjectResult> GetTicketsByDeparture([FromRoute] int departureID)
+        {
+            return Ok((await _service.GetAll()).Where(p => p.DepartureId == departureID));
+        }
+
         [NonAction]
         public async Task<ObjectResult> GetTicket([FromBody] Guid id)
         {
