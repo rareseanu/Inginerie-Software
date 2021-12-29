@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DepartureService } from '../shared/departure.service';
 import { RouteService } from '../shared/route.service';
+import { LineService } from '../shared/line.service';
 import { StationService } from '../shared/station.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class TicketBookingComoponent implements OnInit {
     get f() { return this.bookingForm.controls; }
 
     constructor(public stationService: StationService, public routeService: RouteService,
-        public departureService: DepartureService) { }
+        public departureService: DepartureService,public lineService: LineService) { }
 
     ngOnInit(): void {
         this.bookingForm = new FormGroup({
@@ -41,7 +42,7 @@ export class TicketBookingComoponent implements OnInit {
     }
 
     onArrivalStationChanged() {
-        this.routeService.getRoutesByStations(this.f['departureStation'].value.id, this.f['arrivalStation'].value.id);
+        this.lineService.getRoutesByStations(this.f['departureStation'].value.id, this.f['arrivalStation'].value.id);
         console.log(this.f['arrivalStation']);
     }
 

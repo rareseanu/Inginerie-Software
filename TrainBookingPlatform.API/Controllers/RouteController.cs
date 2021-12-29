@@ -1,10 +1,9 @@
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
-using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.API.Controllers
@@ -22,7 +21,7 @@ namespace TrainBookingPlatform.API.Controllers
 
         [HttpPost]
         public async Task<ObjectResult> AddRoute([FromBody] RouteDTO routeDTO)
-        {    
+        {
             await _service.Add(routeDTO);
             return Ok("added");
         }
@@ -42,18 +41,6 @@ namespace TrainBookingPlatform.API.Controllers
         public async Task<ObjectResult> GetRoutes()
         {
             return Ok(await _service.GetAll());
-        }
-
-        [HttpGet("by-stations")]
-        public async Task<ObjectResult> GetRoutes([FromQuery] int departureStationId, [FromQuery] int destinationStationId)
-        {
-            return Ok((await _service.GetAll()).Where(p => p.DepartureStationId == departureStationId &&
-                p.DestinationStationId ==destinationStationId));
-        }
-        [NonAction]
-        public async Task<ObjectResult> GetRoute([FromBody] Guid id)
-        {
-            return Ok(null);
         }
     }
 }
