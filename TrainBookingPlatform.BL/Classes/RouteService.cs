@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
@@ -26,11 +28,7 @@ namespace TrainBookingPlatform.BL.Classes
         {
             Route route = _mapper.Map<Route>(routeDTO);
             route.Id = 0;
-            if (route.DepartureStationId != route.DestinationStationId)
-            {
-                return Result<RouteDTO>.Success(_mapper.Map<RouteDTO>(await _routeRepository.Create(route)));
-            }
-            return Result<RouteDTO>.Failure("Failed to add the route.");
+            return Result<RouteDTO>.Success(_mapper.Map<RouteDTO>(await _routeRepository.Create(route)));
         }
 
         public async Task<Route> Delete(int id)
@@ -46,17 +44,13 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<Result<RouteDTO>> Update(RouteDTO routeDTO)
         {
             Route route = _mapper.Map<Route>(routeDTO);
-            if (route.DepartureStationId != route.DestinationStationId)
-            {
-                return Result<RouteDTO>.Success(_mapper.Map<RouteDTO>(await _routeRepository.Update(route)));
-            }
-            return Result<RouteDTO>.Failure("Failed to update the route.");
+            return Result<RouteDTO>.Success(_mapper.Map<RouteDTO>(await _routeRepository.Update(route)));
         }
 
         public async Task<Result<RouteDTO>> Get(int id)
         {
             Route route = await _routeRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
-            if(route != null)
+            if (route != null)
             {
                 return Result<RouteDTO>.Success(_mapper.Map<RouteDTO>(route));
             }

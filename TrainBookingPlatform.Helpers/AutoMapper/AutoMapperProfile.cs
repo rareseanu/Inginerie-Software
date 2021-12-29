@@ -15,8 +15,10 @@ namespace TrainBookingPlatform.Helpers.AutoMapper
         {
             CreateMap<DepartureDTO,Departure>();
             CreateMap<Departure,DepartureDTO>();
-            CreateMap<RouteDTO,Route>();
+            CreateMap<LineDTO,Line>();
+            CreateMap<Line,LineDTO>();
             CreateMap<Route,RouteDTO>();
+            CreateMap<RouteDTO,Route>();
             CreateMap<StationDTO,Station>();
             CreateMap<Station,StationDTO>();
             CreateMap<TicketDTO,Ticket>();

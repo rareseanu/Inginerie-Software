@@ -4,6 +4,7 @@ import { AuthenticationService } from '../shared/authentication.service';
 import { DepartureService } from '../shared/departure.service';
 import { RouteService } from '../shared/route.service';
 import { SeatObject } from '../shared/seat-object.model';
+import { LineService } from '../shared/line.service';
 import { StationService } from '../shared/station.service';
 import { Ticket } from '../shared/ticket.model';
 import { TicketService } from '../shared/ticket.service';
@@ -24,7 +25,7 @@ export class TicketBookingComoponent implements OnInit {
 
     constructor(public stationService: StationService, public routeService: RouteService,
         public departureService: DepartureService, public wagonService: WagonService,
-        public authenticationService: AuthenticationService, public ticketService: TicketService) { }
+        public authenticationService: AuthenticationService, public ticketService: TicketService, public lineService: LineService) { }
 
     ngOnInit(): void {
         this.bookingForm = new FormGroup({

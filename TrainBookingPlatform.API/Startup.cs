@@ -40,6 +40,8 @@ namespace TrainBookingPlatform.API
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<ILineRepository, LineRepository>();
+            services.AddScoped<ILineService, LineService>();
             services.AddScoped<IRouteRepository, RouteRepository>();
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<IStationRepository, StationRepository>();
