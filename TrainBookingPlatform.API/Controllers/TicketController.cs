@@ -44,9 +44,12 @@ namespace TrainBookingPlatform.API.Controllers
         }
 
         [HttpGet("by-departure/{departureID}")]
-        public async Task<ObjectResult> GetTicketsByDeparture([FromRoute] int departureID)
+        public async Task<ObjectResult> GetTicketsByDeparture([FromRoute] int departureID, [FromQuery] string departureDate)
         {
-            return Ok((await _service.GetAll()).Where(p => p.DepartureId == departureID));
+            double ticks = double.Parse(departureDate);
+            TimeSpan time = TimeSpan.FromMilliseconds(ticks);
+            DateTime date = new DateTime(1970, 1, 1) + time;
+            return Ok((await _service.GetAll()).Where(p => p.DepartureId == departureID && p.DepartureDate.Date == date.Date));
         }
 
         [NonAction]
