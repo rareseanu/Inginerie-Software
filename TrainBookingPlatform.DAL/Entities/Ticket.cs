@@ -10,6 +10,7 @@ namespace TrainBookingPlatform.DAL.Entities
         public int DepartureId { get; set; }
         public Departure Departure { get; set; }
         public int SeatNumber { get; set; }
+        public int WagonNumber { get; set; }
         public int Price { get; set; }
     }
 }

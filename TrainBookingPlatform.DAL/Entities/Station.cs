@@ -8,8 +8,8 @@ namespace TrainBookingPlatform.DAL.Entities
         public string Name { get; set; }
         public int NumberOfLines { get; set; }
         [InverseProperty("DestinationStation")]
-        public List<Route> DestinationRoutes { get; set; }
+        public List<Line> DestinationRoutes { get; set; }
         [InverseProperty("DepartureStation")]
-        public List<Route> DepartureRoutes { get; set; }
+        public List<Line> DepartureRoutes { get; set; }
     }
 }

@@ -16,6 +16,8 @@ import { TrainComponent } from './train/train.component';
 import { TrainDevextremeComponent } from './train/train-devextreme/train-devextreme.component';
 import { DepartureComponent } from './departure/departure.component';
 import { DepartureDevextremeComponent } from './departure/departure-devextreme/departure-devextreme.component';
+import { LineComponent } from './line/line.component';
+import { LineDevextremeComponent } from './line/line-devextreme/line-devextreme.component';
 import { RouteComponent } from './route/route.component';
 import { RouteDevextremeComponent } from './route/route-devextreme/route-devextreme.component';
 import { ToastComponent } from './shared/toast/toast.component';
@@ -34,6 +36,8 @@ import { TicketBookingComoponent } from './ticket-booking/ticket-booking.compone
     TrainDevextremeComponent,
     DepartureComponent,
     DepartureDevextremeComponent,
+    LineComponent,
+    LineDevextremeComponent,
     RouteComponent,
     RouteDevextremeComponent,
     ToastComponent,

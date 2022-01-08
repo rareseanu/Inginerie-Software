@@ -40,6 +40,8 @@ namespace TrainBookingPlatform.API
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<ILineRepository, LineRepository>();
+            services.AddScoped<ILineService, LineService>();
             services.AddScoped<IRouteRepository, RouteRepository>();
             services.AddScoped<IRouteService, RouteService>();
             services.AddScoped<IStationRepository, StationRepository>();
@@ -47,6 +49,7 @@ namespace TrainBookingPlatform.API
             services.AddScoped<IDepartureRepository, DepartureRepository>();
             services.AddScoped<IDepartureService, DepartureService>();
             services.AddScoped<IWagonRepository, WagonRepository>();
+            services.AddScoped<IWagonService, WagonService>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddAuthentication(options =>
             {
