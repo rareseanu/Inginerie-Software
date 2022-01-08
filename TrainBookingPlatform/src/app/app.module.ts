@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { UserManagementComponent } from './user-management/user-management.component';
 import { HomeComponent } from './home/home.component';
 import { StationComponent } from './station/station.component';
 import { StationDevextremeComponent } from './station/station-devextreme/station-devextreme.component';
@@ -26,7 +25,6 @@ import { TicketBookingComoponent } from './ticket-booking/ticket-booking.compone
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    UserManagementComponent,
     HomeComponent,
     StationComponent,
     StationDevextremeComponent,
