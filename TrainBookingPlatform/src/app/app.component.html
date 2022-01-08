@@ -30,16 +30,18 @@
       </ul>
       <ul *ngIf="!authenticationService.getCurrentUser" class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
-      <div *ngIf="authenticationService.getCurrentUser" class="details-column">
-        <span class="me-4 badge bg-primary" [ngClass]="authenticationService.getCurrentUser.role == 'Administrator' ? 'bg-danger' : 'bg-primary'" >{{authenticationService.getCurrentUser.role}}</span>
-        <span class="me-4">{{authenticationService.getCurrentUser.email}}</span>  
-      </div>
+      <a routerLink="/user">
+        <div *ngIf="authenticationService.getCurrentUser" class="details-column">        
+          <span class="me-4 badge bg-primary" [ngClass]="authenticationService.getCurrentUser.role == 'Administrator' ? 'bg-danger' : 'bg-primary'" >{{authenticationService.getCurrentUser.role}}</span>
+          <span class="me-4">{{authenticationService.getCurrentUser.email}}</span>  
+        </div>
+      </a>
       <button *ngIf="!authenticationService.getCurrentUser" type="button" class="btn btn-primary" routerLink="/login">Login</button>
       <button (click)="logout()" *ngIf="authenticationService.getCurrentUser" type="button" class="btn btn-primary">Logout</button>
     </div>
   </div>
 </nav>
 
-<div class="content" role="main">
+<div role="main">
   <router-outlet></router-outlet>
 </div>

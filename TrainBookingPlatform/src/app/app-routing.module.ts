@@ -10,11 +10,13 @@ import { AuthenticationGuard } from './shared/authentication.guard';
 import { StationComponent } from './station/station.component';
 import { TicketBookingComoponent } from './ticket-booking/ticket-booking.component';
 import { TrainComponent } from './train/train.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'user', component: UserComponent },
   { path: 'departure', component: DepartureComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']} },
   { path: 'line', component: LineComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
   { path: 'route', component: RouteComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },

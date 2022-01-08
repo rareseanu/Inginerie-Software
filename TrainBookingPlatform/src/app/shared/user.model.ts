@@ -5,4 +5,5 @@ export class User {
     public expiresAt: Date;
     public email: string;
     public role: string;
+    public roleId: number;
 }

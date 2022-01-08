@@ -1,3 +1,4 @@
+<div class="content">
 <div *ngIf="!authenticationService.getCurrentUser; then loginBlock else loggedinBlock">
 </div>
 <ng-template #loginBlock>
@@ -28,3 +29,4 @@
 <ng-template #loggedinBlock>
   <h3>You are already logged in!</h3>
 </ng-template>
+</div>

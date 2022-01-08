@@ -21,6 +21,7 @@ import { RouteComponent } from './route/route.component';
 import { RouteDevextremeComponent } from './route/route-devextreme/route-devextreme.component';
 import { ToastComponent } from './shared/toast/toast.component';
 import { TicketBookingComoponent } from './ticket-booking/ticket-booking.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TicketBookingComoponent } from './ticket-booking/ticket-booking.compone
     RouteComponent,
     RouteDevextremeComponent,
     ToastComponent,
-    TicketBookingComoponent
+    TicketBookingComoponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
