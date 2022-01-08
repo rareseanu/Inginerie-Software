@@ -20,15 +20,15 @@ namespace TrainBookingPlatform.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ObjectResult> AddDeparture([FromBody] Departure departure)
+        public async Task<ObjectResult> AddDeparture([FromBody] DepartureDTO departureDTO)
         {
-            await _service.Add(departure);
+            await _service.Add(departureDTO);
             return Ok("added");
         }
         [HttpPut]
-        public async Task<ObjectResult> UpdateDeparture([FromBody] Departure departure)
+        public async Task<ObjectResult> UpdateDeparture([FromBody] DepartureDTO departureDTO)
         {
-            await _service.Update(departure);
+            await _service.Update(departureDTO);
             return Ok("updated");
         }
         [HttpDelete("{id}")]

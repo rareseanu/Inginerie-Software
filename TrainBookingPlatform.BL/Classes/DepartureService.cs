@@ -1,24 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.DAL.Repository.Interfaces;
+using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.BL.Classes
 {
     public class DepartureService : IDepartureService
     {
         private IDepartureRepository _departureRepository;
+        private IMapper _mapper;
 
-        public DepartureService(IDepartureRepository departureRepository)
+        public DepartureService(IDepartureRepository departureRepository, IMapper mapper)
         {
             _departureRepository = departureRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Departure> Add(Departure departure)
+        public async Task<Departure> Add(DepartureDTO departureDTO)
         {
+            var departure = _mapper.Map<Departure>(departureDTO);
+
             return await _departureRepository.Create(departure);
         }
 
@@ -32,8 +39,10 @@ namespace TrainBookingPlatform.BL.Classes
             return null;
         }
 
-        public async Task<Departure> Update(Departure departure)
+        public async Task<Departure> Update(DepartureDTO departureDTO)
         {
+            var departure = _mapper.Map<Departure>(departureDTO);
+
             return await _departureRepository.Update(departure);
         }
 

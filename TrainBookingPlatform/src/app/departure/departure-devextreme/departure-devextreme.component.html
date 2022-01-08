@@ -20,8 +20,8 @@
       <dxo-lookup [dataSource]="routeService.dataSource" displayExpr="routeNumber" valueExpr="id">
       </dxo-lookup>
     </dxi-column>
-    <dxi-column dataField="departureTime" caption="Departure Time" dataType="date" alignment="left"></dxi-column>
-    <dxi-column dataField="arrivalTime" caption="Arrival Time" dataType="date" alignment="left"></dxi-column>
+    <dxi-column dataField="departureTime" caption="Departure Time" dataType='datetime' [editorOptions]="{ type: 'time' }" format='shortTime' alignment="left"></dxi-column>
+    <dxi-column dataField="arrivalTime" caption="Arrival Time" dataType='datetime' [editorOptions]="{ type: 'time' }" format='shortTime' alignment="left"></dxi-column>
     <dxi-column dataField="trainId" caption="Train" alignment="left">
       <dxo-lookup [dataSource]="trainService.dataSource" displayExpr="number" valueExpr="id">
       </dxo-lookup>

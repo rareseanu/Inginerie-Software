@@ -13,22 +13,26 @@ namespace TrainBookingPlatform.Helpers.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<DepartureDTO,Departure>();
-            CreateMap<Departure,DepartureDTO>();
             CreateMap<LineDTO,Line>();
             CreateMap<Line,LineDTO>();
-            CreateMap<Route,RouteDTO>();
-            CreateMap<RouteDTO,Route>();
-            CreateMap<StationDTO,Station>();
-            CreateMap<Station,StationDTO>();
-            CreateMap<TicketDTO,Ticket>();
-            CreateMap<Ticket,TicketDTO>();
-            CreateMap<TrainDTO,Train>();
-            CreateMap<Train,TrainDTO>();
+            CreateMap<DepartureDTO, Departure>()
+                .ForMember(d => d.ArrivalTime,
+                    o => o.MapFrom(src => src.ArrivalTime.TimeOfDay))
+                .ForMember(d => d.DepartureTime,
+                    o => o.MapFrom(src => src.DepartureTime.TimeOfDay));
+            CreateMap<Departure, DepartureDTO>();
+            CreateMap<RouteDTO, Route>();
+            CreateMap<Route, RouteDTO>();
+            CreateMap<StationDTO, Station>();
+            CreateMap<Station, StationDTO>();
+            CreateMap<TicketDTO, Ticket>();
+            CreateMap<Ticket, TicketDTO>();
+            CreateMap<TrainDTO, Train>();
+            CreateMap<Train, TrainDTO>();
             CreateMap<UserDTO, User>();
-            CreateMap<User,UserDTO>();       
-            CreateMap<WagonDTO,Wagon>();       
-            CreateMap<Wagon,WagonDTO>();       
+            CreateMap<User, UserDTO>();
+            CreateMap<WagonDTO, Wagon>();
+            CreateMap<Wagon, WagonDTO>();
         }
     }
 }
