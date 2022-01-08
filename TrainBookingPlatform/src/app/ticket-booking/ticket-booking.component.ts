@@ -31,8 +31,9 @@ export class TicketBookingComoponent implements OnInit {
         this.bookingForm = new FormGroup({
             departureStation: new FormControl('', Validators.required),
             arrivalStation: new FormControl({value: '', disabled: true}, Validators.required),
-            route: new FormControl('', Validators.required),
-            departure: new FormControl('', Validators.required),
+            route: new FormControl({value: '', disabled: true}, Validators.required),
+            departure: new FormControl({value: '', disabled: true}, Validators.required),
+            departureDate: new FormControl({value: '', disabled: true}, Validators.required),
             wagon: new FormControl({value: '', disabled: true}, Validators.required),
             seat: new FormControl({value: '', disabled: true}, Validators.required)
         })
@@ -42,9 +43,14 @@ export class TicketBookingComoponent implements OnInit {
     }
 
     onSubmit(): void {
+        this.submitted = true;
+
+        if (this.bookingForm.invalid) {
+            return;
+        }
         if(this.authenticationService.getCurrentUser) {
             let ticket = new Ticket(this.authenticationService.getCurrentUser?.userId, new Date(),
-                this.f['departure'].value.id, this.f['wagon'].value.number, this.f['seat'].value, 5);
+                this.f['departure'].value.id, this.f['wagon'].value.number, this.f['seat'].value, 5, new Date(this.f['departureDate'].value));
             this.ticketService.addTicket(ticket);
         }
     }
@@ -55,23 +61,24 @@ export class TicketBookingComoponent implements OnInit {
 
     onArrivalStationChanged() {
         this.routeService.getRoutesByStations(this.f['departureStation'].value.id, this.f['arrivalStation'].value.id);
-        console.log(this.f['arrivalStation']);
+        this.f['route'].enable();
     }
 
     onRouteChanged() {
         this.departureService.getDeparturesByRouteId(this.f['route'].value);
-        console.log(this.departureService.dataSource);
+        this.f['departure'].enable();
     }
 
     onDepartureChanged() {
         console.log(this.f['departure'].value.trainId);
         this.wagonService.getWagonsByTrainId(this.f['departure'].value.trainId);
-        this.f['wagon'].enable();   
+        this.f['departureDate'].enable();   
+        this.f['wagon'].enable();
     }
 
     onChooseSeatClicked() {
         this.seats = [];
-        this.ticketService.getTicketsByDeparture(this.f['departure'].value.id).subscribe(data => {
+        this.ticketService.getTicketsByDeparture(this.f['departure'].value.id, this.f['departureDate'].value).subscribe(data => {
             this.ticketService.dataSource = (<Ticket[]>data).filter(p => p.wagonNumber == this.f['wagon'].value.number);
             for(let i = 0; i < Math.ceil(this.f['wagon'].value.numberOfSeats / 4.0); ++i) {
                 this.seats.push([]);

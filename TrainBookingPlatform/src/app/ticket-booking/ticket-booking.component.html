@@ -43,6 +43,14 @@
         </div>
     </div>
     <div class="mb-3">
+        <label class="form-label" for="departureDate">Departure date</label>
+        <input type="date" formControlName="departureDate" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['departureDate'].errors }" placeholder="Departure date" />
+        <div *ngIf="submitted && f['departureDate'].errors" class="invalid-feedback">
+          <div *ngIf="f['departureDate'].errors['required']">Departure date is required</div>
+        </div>
+      </div>
+    <div class="mb-3">
         <label class="form-label" for="wagon">Wagon</label>
         <select class="form-select" aria-label="Wagon" formControlName="wagon"
             [ngClass]="{ 'is-invalid': submitted && f['wagon'].errors }">
@@ -54,7 +62,7 @@
     </div>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <button (click)="onChooseSeatClicked()" #myModal data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-outline-secondary"
+            <button [disabled]="!this.f['wagon'].value"  (click)="onChooseSeatClicked()" #myModal data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-outline-secondary"
                 type="button">Choose
                 Seat</button>
         </div>
@@ -72,7 +80,7 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="myModalLabel">Choose a seat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
