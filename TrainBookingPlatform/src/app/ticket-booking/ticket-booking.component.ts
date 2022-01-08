@@ -60,6 +60,7 @@ export class TicketBookingComoponent implements OnInit {
 
     onRouteChanged() {
         this.departureService.getDeparturesByRouteId(this.f['route'].value);
+        console.log(this.departureService.dataSource);
     }
 
     onDepartureChanged() {
