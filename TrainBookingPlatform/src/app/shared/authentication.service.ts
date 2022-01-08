@@ -41,6 +41,7 @@ export class AuthenticationService {
             .pipe(
                 tap(data => {
                     if(data.value != null){
+                        console.log(data);
                         var user = <User> data.value;
                         user.role = this.getCurrentUserRole(user.token);
                         user.email = this.getCurrentUserEmail(user.token);
