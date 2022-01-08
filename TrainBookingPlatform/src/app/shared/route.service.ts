@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { tap } from "rxjs";
+import { Line } from "./line.model";
 import { Route } from "./route.model";
 
 @Injectable({ providedIn: 'root' })
@@ -11,13 +12,6 @@ export class RouteService {
 
     getRoutes() {
         this.http.get(`https://localhost:44367/api/route/`, { withCredentials: true })
-            .subscribe(data => {
-                this.dataSource = <Route[]>data;
-            });
-    }
-
-    getRoutesByStations(departureStationId: number, destinationStationId: number) {
-        this.http.get(`https://localhost:44367/api/route/by-stations?departureStationId=${departureStationId}&destinationStationId=${destinationStationId}`, { withCredentials: true })
             .subscribe(data => {
                 this.dataSource = <Route[]>data;
             });
@@ -39,6 +33,13 @@ export class RouteService {
                 this.getRoutes();
             }),
         ).subscribe();
+    }
+
+    getRoutesByStations(departureStationId: number, destinationStationId: number) {
+        this.http.get(`https://localhost:44367/api/line/by-stations?departureStationId=${departureStationId}&destinationStationId=${destinationStationId}`, { withCredentials: true })
+            .subscribe(data => {
+                this.dataSource = <Route[]>data;
+            });
     }
 
     update(data: any) {

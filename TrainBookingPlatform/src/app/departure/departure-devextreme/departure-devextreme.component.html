@@ -17,7 +17,7 @@
     </dxo-editing>
 
     <dxi-column dataField="routeId" caption="Route" alignment="left">
-      <dxo-lookup [dataSource]="routeService.dataSource" displayExpr="id" valueExpr="id">
+      <dxo-lookup [dataSource]="routeService.dataSource" displayExpr="routeNumber" valueExpr="id">
       </dxo-lookup>
     </dxi-column>
     <dxi-column dataField="departureTime" caption="Departure Time" dataType='datetime' [editorOptions]="{ type: 'time' }" format='shortTime' alignment="left"></dxi-column>

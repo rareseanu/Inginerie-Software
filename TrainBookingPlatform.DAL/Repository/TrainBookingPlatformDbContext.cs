@@ -12,6 +12,7 @@ namespace TrainBookingPlatform.DAL.Repository
         public DbSet<Departure> Departures { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Line> Lines { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Station> Stations { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
