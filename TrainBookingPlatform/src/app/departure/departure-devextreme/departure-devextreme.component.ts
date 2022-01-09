@@ -28,8 +28,6 @@ export class DepartureDevextremeComponent {
 
   public displayExpr = (item: any) => {
     // "item" can be null
-    console.log(this.lineService.dataSource);
-    console.log(item);
     return item && item.departureStationName + '-' + item.destinationStationName;
   }
 }

@@ -51,7 +51,6 @@ export class StationDevextremeComponent {
 
   update(data: any) {
     var station: Station = Object.assign(data.oldData, data.newData);
-    console.log(station);
     this.http.put(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text' }).pipe(
       tap(() => {
         this.getStations();

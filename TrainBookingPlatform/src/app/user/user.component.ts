@@ -30,7 +30,8 @@ export class UserComponent implements OnInit {
       "new-password": new FormControl(''),
       "new-password-again": new FormControl('')
     });
-    if(this.authenticationService.getCurrentUser != null){
+    
+    if(this.authenticationService.getCurrentUser != null) {
       this.getUserInfo();
       this.ticketService.getUserTickets(this.authenticationService.getCurrentUser.userId);
     }

@@ -50,7 +50,6 @@ export class DepartureService {
 
     update(data: any) {
         var departure: Departure = Object.assign(data.oldData, data.newData);
-        console.log(departure);
         this.http.put(`https://localhost:44367/api/departure/`, departure, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getDepartures();

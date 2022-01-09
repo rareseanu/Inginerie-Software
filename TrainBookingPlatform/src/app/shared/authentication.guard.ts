@@ -11,7 +11,7 @@ export class AuthenticationGuard implements CanActivate {
     ) {}
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        await this.authenticationService.refreshToken().toPromise();
+        await this.authenticationService.refreshTokenOnce().toPromise();
         const currentUser = this.authenticationService.getCurrentUser;
 
         if (currentUser) {
@@ -19,7 +19,6 @@ export class AuthenticationGuard implements CanActivate {
                 return true;
             }
             this.router.navigate(['/']);
-            console.log(currentUser.role);
             return false;
         }
 
