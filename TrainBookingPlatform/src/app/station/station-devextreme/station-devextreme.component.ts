@@ -44,7 +44,7 @@ export class StationDevextremeComponent {
     this.http.post(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text'}).pipe(
       tap(() => {
         this.getStations();
-        this.toastService.addToast("Test", "Succes bitch");
+        this.toastService.addToast("Success!", "Station added successfully!");
       }),
     ).subscribe();
   }
