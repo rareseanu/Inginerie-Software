@@ -1,9 +1,0 @@
-<div *ngIf="toggleRegister; then registerBlock else loginBlock">
-</div>
-<ng-template #loginBlock>
-
-</ng-template>
-<ng-template #registerBlock>
-    <app-register></app-register>
-    <p>Already have an account? Login <a href="#" (click)="onToggle()">here</a></p>
-</ng-template>

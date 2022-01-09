@@ -33,8 +33,8 @@ namespace TrainBookingPlatform.Helpers.AutoMapper
             CreateMap<Ticket, TicketDTO>();
             CreateMap<TrainDTO, Train>();
             CreateMap<Train, TrainDTO>();
-            CreateMap<UserDTO, User>();
-            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>().ForMember(p=>p.Password,o=>o.MapFrom(src=>src.OldPassword));
+            CreateMap<User, UserDTO>().ForMember(p => p.OldPassword, o => o.MapFrom(src => src.Password));
             CreateMap<WagonDTO, Wagon>();
             CreateMap<Wagon, WagonDTO>();
         }
