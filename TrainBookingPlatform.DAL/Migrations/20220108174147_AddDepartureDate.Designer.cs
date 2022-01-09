@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainBookingPlatform.DAL.Repository;
 
 namespace TrainBookingPlatform.DAL.Migrations
 {
     [DbContext(typeof(TrainBookingPlatformDbContext))]
-    partial class TrainBookingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108174147_AddDepartureDate")]
+    partial class AddDepartureDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,10 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.Property<TimeSpan>("DepartureTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("LineId")
+                    b.Property<int?>("LineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RouteId")
                         .HasColumnType("int");
 
                     b.Property<int>("TrainId")
@@ -41,6 +46,8 @@ namespace TrainBookingPlatform.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LineId");
+
+                    b.HasIndex("RouteId");
 
                     b.HasIndex("TrainId");
 
@@ -251,9 +258,13 @@ namespace TrainBookingPlatform.DAL.Migrations
 
             modelBuilder.Entity("TrainBookingPlatform.DAL.Entities.Departure", b =>
                 {
-                    b.HasOne("TrainBookingPlatform.DAL.Entities.Line", "Line")
+                    b.HasOne("TrainBookingPlatform.DAL.Entities.Line", null)
                         .WithMany("Departures")
-                        .HasForeignKey("LineId")
+                        .HasForeignKey("LineId");
+
+                    b.HasOne("TrainBookingPlatform.DAL.Entities.Route", "Route")
+                        .WithMany()
+                        .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -263,7 +274,7 @@ namespace TrainBookingPlatform.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Line");
+                    b.Navigation("Route");
 
                     b.Navigation("Train");
                 });

@@ -1,0 +1,62 @@
+<div class="d-flex align-items-start">
+  <div class="nav navbar-light bg-light flex-column nav-pills" id="v-pills-tab" role="tablist"
+    aria-orientation="vertical">
+    <button class="nav-link active button-tab" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button"
+      role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+    <button class="nav-link button-tab" id="tickets-tab" data-bs-toggle="pill" data-bs-target="#tickets" type="button" role="tab"
+      aria-controls="tickets" aria-selected="false">Tickets</button>
+
+  </div>
+  <div class="tab-content w-100 mt-3" id="v-pills-tabContent">
+    <div class="tab-pane fade show active w-25 center" id="profile" role="tabpanel" aria-labelledby="profile">
+      <h2 class="mb-4 ">Profile info</h2>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label" for="Name">Name</label>
+          <input type="text" formControlName="name" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" placeholder="Name" />
+          <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+            <div *ngIf="f['name'].errors['required']">Name is required</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="Phone-number">Phone number</label>
+          <input type="text" formControlName="phone-number" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['phone-number'].errors }" placeholder="Phone" />
+          <div *ngIf="submitted && f['phone-number'].errors" class="invalid-feedback">
+            <div *ngIf="f['phone-number'].errors['required']">Phone number is required</div>
+          </div>
+        </div>
+        <h4 class="mb-4 ">Reset password</h4>
+        <div class="mb-3">
+          <label class="form-label" for="password">Old password</label>
+          <input type="password" formControlName="old-password" class="form-control" placeholder="Old password" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">New password</label>
+          <input type="password" formControlName="new-password" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && needNewPassword()}" placeholder="New password" />
+          <div *ngIf="submitted && needNewPassword()" class="invalid-feedback">
+            <div>Field is required</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">New password again</label>
+          <input type="password" formControlName="new-password-again" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && newPasswordAgainInvalid() }" placeholder="New password" />
+          <div *ngIf="submitted && newPasswordAgainInvalid()" class="invalid-feedback">
+            <div>Field is required</div>
+          </div>
+        </div>
+        <button class="btn btn-primary w-100">
+          Save
+        </button>
+      </form>
+    </div>
+    <div class="tab-pane fade d-flex row w-100 center" id="tickets" role="tabpanel" aria-labelledby="tickets">
+      <div class="col-lg-2" *ngFor="let ticket of ticketService.dataSource; let i = index">
+        <app-user-ticket [ticket]="ticket" [ticketNo]="i"></app-user-ticket>
+      </div>
+    </div>
+  </div>
+</div>

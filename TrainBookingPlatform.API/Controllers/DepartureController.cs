@@ -43,9 +43,14 @@ namespace TrainBookingPlatform.API.Controllers
             return Ok(await _service.GetAll());
         }
         [HttpGet("by-route/{routeId}")]
-        public async Task<ObjectResult> GetDepartures([FromRoute] int routeId)
+        public async Task<ObjectResult> GetDepartures([FromRoute] int routeId, [FromQuery] int departureStationId)
         {
-            return Ok((await _service.GetAll()).Where(p => p.RouteId == routeId));
+            return Ok((await _service.GetAll()).Where(p => p.Line.RouteId == routeId && p.Line.DepartureStationId == departureStationId));
+        }
+        [HttpGet("by-route2/{routeId}")]
+        public async Task<ObjectResult> GetDepartures2([FromRoute] int routeId, [FromQuery] int destinationStationId)
+        {
+            return Ok((await _service.GetAll()).Where(p => p.Line.RouteId == routeId && p.Line.DestinationStationId == destinationStationId));
         }
         [NonAction]
         public async Task<ObjectResult> GetDeparture([FromBody] Guid id)

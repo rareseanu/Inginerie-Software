@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
+using TrainBookingPlatform.Helpers.Comparers;
 using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.API.Controllers
@@ -43,10 +45,22 @@ namespace TrainBookingPlatform.API.Controllers
             return Ok(await _service.GetAll());
         }
 
-        [HttpGet("by-departure/{departureID}")]
-        public async Task<ObjectResult> GetTicketsByDeparture([FromRoute] int departureID)
+        [HttpGet("user/{userId}")]
+        public async Task<ObjectResult> GetUserTickets([FromRoute] int userId)
         {
-            return Ok((await _service.GetAll()).Where(p => p.DepartureId == departureID));
+            List<Ticket> tickets = (await _service.GetAll()).Where(p => p.UserId == userId).ToList();
+            tickets.Sort(new TicketComparer());
+            tickets.Reverse();
+            return Ok(tickets);
+        }
+
+        [HttpGet("by-departure/{departureID}")]
+        public async Task<ObjectResult> GetTicketsByDeparture([FromRoute] int departureID, [FromQuery] string departureDate)
+        {
+            double ticks = double.Parse(departureDate);
+            TimeSpan time = TimeSpan.FromMilliseconds(ticks);
+            DateTime date = new DateTime(1970, 1, 1) + time;
+            return Ok((await _service.GetAll()).Where(p => p.DepartureId == departureID && p.DepartureDate.Date == date.Date));
         }
 
         [NonAction]

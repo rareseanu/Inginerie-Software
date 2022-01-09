@@ -22,10 +22,10 @@ namespace TrainBookingPlatform.API.Controllers
         {
             return Ok(null);
         }
-        [HttpGet("user/{id}")]
-        public async Task<ObjectResult> GetUser([FromRoute] Guid id)
+        [HttpGet("{id}")]
+        public async Task<ObjectResult> GetUser([FromRoute] int id)
         {
-            return Ok(null);
+            return Ok(await _userService.Get(id));
         }
         [HttpPut("register")]
         public async Task<ObjectResult> Register([FromBody] LoginDTO loginDTO)
@@ -38,10 +38,10 @@ namespace TrainBookingPlatform.API.Controllers
         {
             return Ok(null);
         }
-        [HttpPost("user")]
+        [HttpPost("")]
         public async Task<ObjectResult> UpdateUser([FromBody] UserDTO userDTO)
         {
-            return Ok(null);
+            return Ok(await _userService.Update(userDTO));
         }
         [HttpPost("login")]
         public async Task<ObjectResult> Login([FromBody] LoginDTO loginDTO)

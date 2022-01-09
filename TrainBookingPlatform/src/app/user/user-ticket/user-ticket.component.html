@@ -1,0 +1,29 @@
+<div class="border rounded p-3 text-center">
+    <h4>Ticket No.{{ticketService.dataSource.length - ticketNo}}</h4>
+    <qr-code [value]="ticketToJson()"></qr-code><br>
+    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" [attr.data-bs-target]="'#' + 'ticketDetails' + ticketNo">
+        Details
+    </button>
+
+    <div class="modal fade" [attr.id]="'ticketDetails' + ticketNo" tabindex="-1" aria-labelledby="ticketDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ticketDetailsLabel">Ticket Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <qr-code [size]="200" [value]="ticketToJson()"></qr-code><br>
+                    <p class="mt-2">Purchase Date: {{ticket.purchasedDate.toString().substring(0,10)}}</p>
+                    <p>Wagon No.: {{ticket.wagonNumber}}</p>
+                    <p>Seat No.: {{ticket.seatNumber}}</p>
+                    <p>Departure Date: {{ticket.departureDate.toString().substring(0,10)}}</p>
+                    <p>Price: {{ticket.price}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

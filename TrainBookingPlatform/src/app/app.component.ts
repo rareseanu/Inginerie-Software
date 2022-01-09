@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(public authenticationService: AuthenticationService) {}
 
   ngOnInit() {
-    
+    this.authenticationService.refreshToken().subscribe();
   }
 
   public logout() {

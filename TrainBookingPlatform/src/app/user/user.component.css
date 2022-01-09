@@ -1,0 +1,36 @@
+@media only screen and (max-width: 590px) {
+  #profile {
+    margin-left: 12rem;
+  }
+
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  margin: auto;
+}
+
+#v-pills-tab {
+  left: 0;
+}
+
+#profile {
+  min-width: 200px;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+#tickets {
+  min-width: 200px;
+  position: relative;
+}
+
+.button-tab {
+  width: 10rem;
+  z-index: 5;
+}

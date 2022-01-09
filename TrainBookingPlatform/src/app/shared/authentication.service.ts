@@ -31,6 +31,11 @@ export class AuthenticationService {
         return jwtToken.Roles;
     }
 
+    public getCurrentUserRoleId(token: string) {
+        const jwtToken = JSON.parse(atob(token.split('.')[1]));
+        return jwtToken.RoleId;
+    }
+
     login(email: string, password: string): Observable<Response> {
         return this.http.post<Response>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true})
             .pipe(
@@ -39,6 +44,7 @@ export class AuthenticationService {
                         var user = <User> data.value;
                         user.role = this.getCurrentUserRole(user.token);
                         user.email = this.getCurrentUserEmail(user.token);
+                        user.roleId = this.getCurrentUserRoleId(user.token);
                         this.currentUserSubject.next(user);
                         this.startRefreshTokenTimer();
                     }
@@ -74,6 +80,7 @@ export class AuthenticationService {
                         var user = <User> data.value;
                         user.role = this.getCurrentUserRole(user.token);
                         user.email = this.getCurrentUserEmail(user.token);
+                        user.roleId = this.getCurrentUserRoleId(user.token);
                         this.currentUserSubject.next(user);
                         this.startRefreshTokenTimer();
                     }
