@@ -1,5 +1,5 @@
-<div class="border rounded p-3 text-center">
-    <h4>Ticket No.{{ticketService.dataSource.length - ticketNo}}</h4>
+<div class="border rounded text-center py-2" id="ticket">
+    <h4>#{{ticketService.dataSource.length - ticketNo}}</h4>
     <qr-code [value]="ticketToJson()"></qr-code><br>
     <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" [attr.data-bs-target]="'#' + 'ticketDetails' + ticketNo">
         Details
