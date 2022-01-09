@@ -23,4 +23,12 @@ export class TicketService {
         this.http.get(`https://localhost:44367/api/ticket/`, { withCredentials: true })
         .subscribe(data => this.dataSource = <Ticket[]>data);
     }
+
+    getUserTickets(id:number){
+        this.http.get(`https://localhost:44367/api/ticket/user/${id}`, { withCredentials: true })
+        .subscribe(data => 
+            {
+                this.dataSource = <Ticket[]>data;
+            });
+    }
 }

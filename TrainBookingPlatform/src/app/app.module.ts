@@ -22,6 +22,8 @@ import { RouteDevextremeComponent } from './route/route-devextreme/route-devextr
 import { ToastComponent } from './shared/toast/toast.component';
 import { TicketBookingComoponent } from './ticket-booking/ticket-booking.component';
 import { UserComponent } from './user/user.component';
+import { UserTicketComponent } from './user/user-ticket/user-ticket.component';
+import { QRCodeModule } from 'angular2-qrcode';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { UserComponent } from './user/user.component';
     RouteDevextremeComponent,
     ToastComponent,
     TicketBookingComoponent,
-    UserComponent
+    UserComponent,
+    UserTicketComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { UserComponent } from './user/user.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    DxDataGridModule
+    DxDataGridModule,
+    QRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

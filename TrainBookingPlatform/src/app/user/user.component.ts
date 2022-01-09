@@ -4,6 +4,8 @@ import { UserInfo } from '../shared/user-info.model';
 import { AuthenticationService } from '../shared/authentication.service';
 import { HttpClient } from "@angular/common/http";
 import { Response } from '../shared/response.model';
+import { UserService } from '../shared/user.service';
+import { TicketService } from '../shared/ticket.service';
 
 @Component({
   selector: 'app-user',
@@ -16,7 +18,7 @@ export class UserComponent implements OnInit {
   submitted = false;
   get f() { return this.profileForm.controls; }
 
-  constructor(private http: HttpClient,public authenticationService: AuthenticationService){
+  constructor(private http: HttpClient,public authenticationService: AuthenticationService,public userService:UserService,public ticketService:TicketService){
 
   }
 
@@ -30,11 +32,12 @@ export class UserComponent implements OnInit {
     });
     if(this.authenticationService.getCurrentUser != null){
       this.getUserInfo();
+      this.ticketService.getUserTickets(this.authenticationService.getCurrentUser.userId);
     }
   }
 
   getUserInfo(){
-    this.http.get(`https://localhost:44367/api/user/${this.authenticationService.getCurrentUser?.userId}`, { withCredentials: true })
+    this.userService.getUserInfo(<number>this.authenticationService.getCurrentUser?.userId)
       .subscribe(data => 
         {
           let userInfo : UserInfo;
@@ -76,7 +79,7 @@ export class UserComponent implements OnInit {
       newUser.oldPassword = this.f["old-password"].value;
       newUser.newPassword = this.f["new-password"].value;
 
-      this.http.post<Response>(`https://localhost:44367/api/user/`, newUser, { withCredentials: true }).subscribe();
+      this.userService.updateUser(newUser);
     }
 
 
