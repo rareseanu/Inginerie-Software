@@ -34,10 +34,10 @@
     </div>
     <div class="mb-3">
         <label class="form-label" for="departure">Departure</label>
-        <select (change)="onDepartureChanged()" class="form-select" aria-label="Departure" formControlName="departure"
+        <select  (change)="onDepartureChanged()" class="form-select" aria-label="Departure" formControlName="departure"
             [ngClass]="{ 'is-invalid': submitted && f['departure'].errors }">
-            <option *ngFor="let departure of departureService.dataSource; let i = index" [ngValue]="departure">
-                {{departure.departureTime.toString().substring(11, 19)}} - {{departureService.dataSource2[i].arrivalTime.toString().substring(11, 19)}}</option>
+                <option *ngFor="let departure of departureService.dataSource; let i = index" [ngValue]="departure">
+                    {{departure.departureTime.toString().substring(11, 19)}} - {{(departureService.dataSource2[i]?.arrivalTime || '').toString().substring(11, 19)}}</option>
         </select>
         <div *ngIf="submitted && f['departure'].errors" class="invalid-feedback">
             <div *ngIf="f['departure'].errors['required']">Departure is required</div>

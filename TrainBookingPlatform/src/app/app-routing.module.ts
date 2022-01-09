@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'user', component: UserComponent },
+  { path: 'user', component: UserComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
   { path: 'departure', component: DepartureComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']} },
   { path: 'line', component: LineComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
   { path: 'route', component: RouteComponent, canActivate: [AuthenticationGuard], data: {role: ['Administrator']}  },
