@@ -10,7 +10,6 @@ export class TicketService {
     constructor(private http: HttpClient) { }
 
     getTicketsByDeparture(departureID: number, departureDate: Date) {
-        console.log(departureDate);
         return this.http.get(`https://localhost:44367/api/ticket/by-departure/${departureID}?departureDate=${new Date(departureDate).getTime()}`, { withCredentials: true });
     }
 
@@ -22,5 +21,13 @@ export class TicketService {
     getTickets() {
         this.http.get(`https://localhost:44367/api/ticket/`, { withCredentials: true })
         .subscribe(data => this.dataSource = <Ticket[]>data);
+    }
+
+    getUserTickets(id:number){
+        this.http.get(`https://localhost:44367/api/ticket/user/${id}`, { withCredentials: true })
+        .subscribe(data => 
+            {
+                this.dataSource = <Ticket[]>data;
+            });
     }
 }

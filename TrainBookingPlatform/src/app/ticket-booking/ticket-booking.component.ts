@@ -22,6 +22,8 @@ export class TicketBookingComoponent implements OnInit {
     get f() { return this.bookingForm.controls; }
 
     seats: SeatObject[][] = [];
+    temporarySeat: number;
+    temporaryWagon: any;
 
     constructor(public stationService: StationService, public routeService: RouteService,
         public departureService: DepartureService, public wagonService: WagonService,
@@ -65,15 +67,14 @@ export class TicketBookingComoponent implements OnInit {
     }
 
     onRouteChanged() {
-        this.departureService.getDeparturesByRouteId(this.f['route'].value);
+        this.departureService.getDeparturesByRouteId(this.f['route'].value, this.f['departureStation'].value.id);
+        this.departureService.getDeparturesByRouteAndDestinationId(this.f['route'].value, this.f['arrivalStation'].value.id);
         this.f['departure'].enable();
     }
 
     onDepartureChanged() {
-        console.log(this.f['departure'].value.trainId);
         this.wagonService.getWagonsByTrainId(this.f['departure'].value.trainId);
-        this.f['departureDate'].enable();   
-        this.f['wagon'].enable();
+        this.f['departureDate'].enable();
     }
 
     onChooseSeatClicked() {
@@ -105,6 +106,23 @@ export class TicketBookingComoponent implements OnInit {
     }
 
     onSeatClick(seatNumber: any) {
-        this.f['seat'].setValue(seatNumber);
+        this.temporarySeat = seatNumber;
+    }
+    onWagonClick(wagon: any) {
+        this.temporaryWagon = wagon;
+    }
+    
+    onSelectWagonClicked() {
+        if(this.temporaryWagon != null) {
+            this.f['wagon'].setValue(this.temporaryWagon);
+            this.onChooseSeatClicked();
+            this.temporaryWagon = null;
+        }
+    }
+
+    onSelectSeatButton() {
+        if(this.temporarySeat != null) {
+            this.f['seat'].setValue(this.temporarySeat);
+        }
     }
 }

@@ -47,19 +47,39 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<Result<UserDTO>> Update(UserDTO userDTO)
         {
             User user = _mapper.Map<User>(userDTO);
-            try
+            using (SHA512 encryption = SHA512.Create())
             {
-                await _userRepository.Update(user);
-                return Result<UserDTO>.Success(userDTO);
-            } catch(Exception ex)
-            {
-                return Result<UserDTO>.Failure("User update failed.");
+                user.Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(user.Password)));
+                User existingUser = await _userRepository.Get(p => p.Id == user.Id).FirstOrDefaultAsync();
+                try
+                {
+                    if(userDTO.NewPassword == "")
+                    {
+                        user.Password = existingUser.Password;
+                    }
+                    if(userDTO.NewPassword != "" && existingUser.Password == user.Password )
+                    {
+                        user.Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(userDTO.NewPassword)));
+                    }
+                    else if(userDTO.NewPassword != "" && existingUser.Password != user.Password)
+                    {                      
+                        return Result<UserDTO>.Failure("User update failed.");
+                    }
+                    await _userRepository.Update(user);
+                    return Result<UserDTO>.Success(userDTO);
+                }
+                catch (Exception ex)
+                {
+                    return Result<UserDTO>.Failure("User update failed.");
+                }
             }
+            return Result<UserDTO>.Failure("User update failed.");
         }
 
         public async Task<Result<UserDTO>> Get(int id)
         {
             var user = await _userRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
+            user.Password = null;
             if(user == null)
             {
                 return Result<UserDTO>.Failure("User not found.");
@@ -141,7 +161,8 @@ namespace TrainBookingPlatform.BL.Classes
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim("Id", user.Id.ToString()),
                     new Claim("Email", user.EmailAddress),
-                    new Claim("Roles", user.Role.Name)
+                    new Claim("Roles", user.Role.Name),
+                    new Claim("RoleId", user.RoleId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddSeconds(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(jwtSecret),
@@ -167,7 +188,7 @@ namespace TrainBookingPlatform.BL.Classes
         {
             using (SHA512 encryption = SHA512.Create())
             {
-                UserDTO user = new UserDTO() { EmailAddress = email, Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
+                UserDTO user = new UserDTO() { EmailAddress = email, OldPassword = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
                 User existingUser = await _userRepository.Get(p => p.EmailAddress == email).FirstOrDefaultAsync();
                 if (existingUser == null)
                 {

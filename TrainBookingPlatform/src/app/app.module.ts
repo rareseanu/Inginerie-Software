@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { UserManagementComponent } from './user-management/user-management.component';
 import { HomeComponent } from './home/home.component';
 import { StationComponent } from './station/station.component';
 import { StationDevextremeComponent } from './station/station-devextreme/station-devextreme.component';
@@ -22,13 +21,15 @@ import { RouteComponent } from './route/route.component';
 import { RouteDevextremeComponent } from './route/route-devextreme/route-devextreme.component';
 import { ToastComponent } from './shared/toast/toast.component';
 import { TicketBookingComoponent } from './ticket-booking/ticket-booking.component';
+import { UserComponent } from './user/user.component';
+import { UserTicketComponent } from './user/user-ticket/user-ticket.component';
+import { QRCodeModule } from 'angular2-qrcode';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    UserManagementComponent,
     HomeComponent,
     StationComponent,
     StationDevextremeComponent,
@@ -41,7 +42,9 @@ import { TicketBookingComoponent } from './ticket-booking/ticket-booking.compone
     RouteComponent,
     RouteDevextremeComponent,
     ToastComponent,
-    TicketBookingComoponent
+    TicketBookingComoponent,
+    UserComponent,
+    UserTicketComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { TicketBookingComoponent } from './ticket-booking/ticket-booking.compone
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    DxDataGridModule
+    DxDataGridModule,
+    QRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

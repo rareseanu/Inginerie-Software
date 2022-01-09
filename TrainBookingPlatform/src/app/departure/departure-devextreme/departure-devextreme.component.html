@@ -7,7 +7,7 @@
       </dxo-popup>
       <dxo-form>
         <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-          <dxi-item dataField="routeId"></dxi-item>
+          <dxi-item dataField="lineId"></dxi-item>
           <dxi-item dataField="departureTime"></dxi-item>
           <dxi-item dataField="arrivalTime"></dxi-item>
           <dxi-item dataField="trainId"></dxi-item>
@@ -16,8 +16,8 @@
       </dxo-form>
     </dxo-editing>
 
-    <dxi-column dataField="routeId" caption="Route" alignment="left">
-      <dxo-lookup [dataSource]="routeService.dataSource" displayExpr="routeNumber" valueExpr="id">
+    <dxi-column dataField="lineId" caption="Line" alignment="left">
+      <dxo-lookup [dataSource]="lineService.dataSource" [displayExpr]="displayExpr" valueExpr="id">
       </dxo-lookup>
     </dxi-column>
     <dxi-column dataField="departureTime" caption="Departure Time" dataType='datetime' [editorOptions]="{ type: 'time' }" format='shortTime' alignment="left"></dxi-column>
