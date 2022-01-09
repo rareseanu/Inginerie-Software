@@ -35,8 +35,8 @@
         <label class="form-label" for="departure">Departure</label>
         <select (change)="onDepartureChanged()" class="form-select" aria-label="Departure" formControlName="departure"
             [ngClass]="{ 'is-invalid': submitted && f['departure'].errors }">
-            <option *ngFor="let departure of departureService.dataSource" [ngValue]="departure">
-                {{departure.departureTime}}</option>
+            <option *ngFor="let departure of departureService.dataSource; let i = index" [ngValue]="departure">
+                {{departure.departureTime.toString().substring(11, 19)}} - {{departureService.dataSource2[i].arrivalTime.toString().substring(11, 19)}}</option>
         </select>
         <div *ngIf="submitted && f['departure'].errors" class="invalid-feedback">
             <div *ngIf="f['departure'].errors['required']">Departure is required</div>
@@ -50,19 +50,26 @@
           <div *ngIf="f['departureDate'].errors['required']">Departure date is required</div>
         </div>
       </div>
-    <div class="mb-3">
-        <label class="form-label" for="wagon">Wagon</label>
-        <select class="form-select" aria-label="Wagon" formControlName="wagon"
+    <div class="input-group mb-3">
+        <!-- <label class="form-label" for="wagon">Wagon</label> -->
+        <!-- <select class="form-select" aria-label="Wagon" formControlName="wagon"
             [ngClass]="{ 'is-invalid': submitted && f['wagon'].errors }">
             <option *ngFor="let wagon of wagonService.dataSource" [ngValue]="wagon">{{wagon.number}}</option>
-        </select>
+        </select> -->
+        <div class="input-group-prepend">
+            <button [disabled]="!this.f['departureDate'].value" #myModal data-bs-toggle="modal" data-bs-target="#myModal2" class="btn btn-outline-secondary"
+                type="button">Choose
+                Wagon</button>
+        </div>
+        <input formControlName="wagon" type="text" class="form-control" placeholder="" value="{{this.f['wagon'].value.number + 1}}" aria-label=""
+            aria-describedby="basic-addon1">
         <div *ngIf="submitted && f['wagon'].errors" class="invalid-feedback">
             <div *ngIf="f['wagon'].errors['required']">Wagon is required</div>
         </div>
     </div>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <button [disabled]="!this.f['wagon'].value"  (click)="onChooseSeatClicked()" #myModal data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-outline-secondary"
+            <button [disabled]="!this.f['wagon'].value"  (click)="onChooseSeatClicked()" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-outline-secondary"
                 type="button">Choose
                 Seat</button>
         </div>
@@ -76,6 +83,26 @@
         Register
     </button>
 </form>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Choose a wagon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row text-center">
+                        <button *ngFor="let wagon of wagonService.dataSource" (click)="onWagonClick(wagon)" type="button" class="seat-button col-md-2 btn btn-primary">{{wagon.number + 1}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="!temporaryWagon" (click)="onSelectWagonClicked()" type="button" data-bs-toggle="modal" data-bs-target="#myModal" data-bs-dismiss="modal" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -95,8 +122,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button [disabled]="!temporarySeat" (click)="onSelectSeatButton()" type="button" data-bs-dismiss="modal" class="btn btn-primary">Select</button>
             </div>
         </div>
     </div>

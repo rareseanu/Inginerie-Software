@@ -65,9 +65,17 @@ namespace TrainBookingPlatform.BL.Classes
 
         public async Task<IEnumerable<LineDTO>> GetAll()
         {
-            List<Line> list = await (await _lineRepository.GetAll()).ToListAsync();
-            List<LineDTO> listDTO = _mapper.Map<List<LineDTO>>(list);
-            return listDTO;
+            List<LineDTO> lines = new List<LineDTO>();
+            foreach (var departure in (await _lineRepository.GetAll()).Include(p => p.DestinationStation).Include(p => p.DepartureStation))
+            {
+                var departureDTO = _mapper.Map<LineDTO>(departure);
+                departureDTO.DestinationStationName = departure.DestinationStation.Name;
+                departureDTO.DepartureStationName = departure.DepartureStation.Name;
+                departureDTO.DepartureStation = null;
+                departureDTO.DestinationStation = null;
+                lines.Add(departureDTO);
+            }
+            return lines;
         }
     }
 }

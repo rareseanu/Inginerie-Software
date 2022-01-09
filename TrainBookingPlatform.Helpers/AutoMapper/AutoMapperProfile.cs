@@ -20,7 +20,11 @@ namespace TrainBookingPlatform.Helpers.AutoMapper
                     o => o.MapFrom(src => src.ArrivalTime.TimeOfDay))
                 .ForMember(d => d.DepartureTime,
                     o => o.MapFrom(src => src.DepartureTime.TimeOfDay));
-            CreateMap<Departure, DepartureDTO>();
+            CreateMap<Departure, DepartureDTO>()
+                .ForMember(d => d.ArrivalTime,
+                    o => o.MapFrom(src => new DateTime(src.ArrivalTime.Ticks))) 
+                .ForMember(d => d.DepartureTime,
+                    o => o.MapFrom(src => new DateTime(src.DepartureTime.Ticks)));
             CreateMap<RouteDTO, Route>();
             CreateMap<Route, RouteDTO>();
             CreateMap<StationDTO, Station>();

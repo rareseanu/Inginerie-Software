@@ -25,7 +25,7 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<Departure> Add(DepartureDTO departureDTO)
         {
             var departure = _mapper.Map<Departure>(departureDTO);
-
+            departure.Line = null;
             return await _departureRepository.Create(departure);
         }
 
@@ -42,7 +42,7 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<Departure> Update(DepartureDTO departureDTO)
         {
             var departure = _mapper.Map<Departure>(departureDTO);
-
+            departure.Line = null;
             return await _departureRepository.Update(departure);
         }
 
@@ -51,9 +51,17 @@ namespace TrainBookingPlatform.BL.Classes
             return await _departureRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Departure>> GetAll()
+        public async Task<IEnumerable<DepartureDTO>> GetAll()
         {
-            return await _departureRepository.GetAll();
+            List<DepartureDTO> departures = new List<DepartureDTO>();
+            foreach(var departure in (await _departureRepository.GetAll()).Include(p => p.Line).Include(p => p.Line.DestinationStation).Include(p => p.Line.DepartureStation))
+            {
+                var departureDTO = _mapper.Map<DepartureDTO>(departure);
+                departureDTO.Line.DestinationStationName = departure.Line.DestinationStation.Name;
+                departureDTO.Line.DepartureStationName = departure.Line.DepartureStation.Name;
+                departures.Add(departureDTO);
+            }
+            return departures;
         }
     }
 }

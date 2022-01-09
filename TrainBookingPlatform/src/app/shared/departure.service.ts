@@ -7,6 +7,7 @@ import { Departure } from "./departure.model";
 @Injectable({ providedIn: 'root' })
 export class DepartureService {
     dataSource: Departure[] = [];
+    dataSource2: Departure[] = [];
 
     constructor(private http: HttpClient) { }
 
@@ -15,9 +16,18 @@ export class DepartureService {
             .subscribe(data => this.dataSource = <Departure[]>data);
     }
 
-    getDeparturesByRouteId(routeId: number) {
-        this.http.get(`https://localhost:44367/api/departure/by-route/${routeId}`, { withCredentials: true })
-            .subscribe(data => this.dataSource = <Departure[]>data);
+    getDeparturesByRouteId(routeId: number, departureStationId: number) {
+        this.http.get(`https://localhost:44367/api/departure/by-route/${routeId}?departureStationId=${departureStationId}`, { withCredentials: true })
+            .subscribe(data => {
+                this.dataSource = <Departure[]>data;
+            });
+    }
+
+    getDeparturesByRouteAndDestinationId(routeId: number, destinationId: number) {
+        this.http.get(`https://localhost:44367/api/departure/by-route2/${routeId}?destinationStationId=${destinationId}`, { withCredentials: true })
+            .subscribe(data => {
+                this.dataSource2 = <Departure[]>data;
+            });
     }
 
     remove(data: any) {

@@ -5,8 +5,8 @@ namespace TrainBookingPlatform.DAL.Entities
 {
     public class Departure : BaseEntity
     {
-        public int RouteId { get; set; }
-        public Route Route { get; set; }
+        public int LineId { get; set; }
+        public Line Line { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
         public int TrainId { get; set; }

@@ -50,12 +50,18 @@ namespace TrainBookingPlatform.API.Controllers
         [HttpGet("by-stations")]
         public async Task<ObjectResult> GetRoutes([FromQuery] int departureStationId, [FromQuery] int destinationStationId)
         {
-            List<LineDTO> lines = (await _service.GetAll()).Where(p => p.DepartureStationId == departureStationId &&
-                p.DestinationStationId == destinationStationId).ToList();
+            List<LineDTO> lines = (await _service.GetAll()).Where(p => p.DepartureStationId == departureStationId).ToList();
             List<RouteDTO> routes = new List<RouteDTO>();
             foreach(LineDTO line in lines)
             {
-                routes = routes.Concat((await _routeService.GetAll()).Where(p => p.Id == line.RouteId).ToList()).ToList();
+                List<LineDTO> lines2 = (await _service.GetAll()).Where(p => p.RouteId == line.RouteId).ToList();
+                foreach(LineDTO line2 in lines2)
+                {
+                    if(line2.DestinationStationId == destinationStationId)
+                    {
+                        routes = routes.Concat((await _routeService.GetAll()).Where(p => p.Id == line.RouteId).ToList()).ToList();
+                    }
+                }
             }
             return Ok(routes.Distinct().ToList());
         }

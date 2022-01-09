@@ -3,4 +3,6 @@ export class Line {
     public routeId: number;
     public destinationStationId: number;
     public departureStationId: number;
+    public departureStationName: string;
+    public destinationStationName: string;
 }

@@ -14,5 +14,7 @@ namespace TrainBookingPlatform.TL.DTOs
         public int? DepartureStationId { get; set; }
         public StationDTO DepartureStation { get; set; }
         public List<DepartureDTO> Departures { get; set; }
+        public string DestinationStationName { get; set; }
+        public string DepartureStationName { get; set; }
     }
 }
