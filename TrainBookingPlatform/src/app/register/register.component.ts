@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit {
             (data) => {
               if(data != null){
                 this.registered = true;
-                console.log(data);
               }
             },
             (error) => {

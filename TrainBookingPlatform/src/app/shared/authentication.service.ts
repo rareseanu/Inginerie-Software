@@ -88,6 +88,21 @@ export class AuthenticationService {
             );
     }
 
+    refreshTokenOnce(): Observable<Response> {
+        return this.http.put<Response>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
+            .pipe(
+                tap(data => {
+                    if(data.value != null){
+                        var user = <User> data.value;
+                        user.role = this.getCurrentUserRole(user.token);
+                        user.email = this.getCurrentUserEmail(user.token);
+                        user.roleId = this.getCurrentUserRoleId(user.token);
+                        this.currentUserSubject.next(user);
+                    }
+                })
+            );
+    }
+
     private startRefreshTokenTimer() {
         if (this.getCurrentUser) {
             const jwtToken = JSON.parse(atob(this.getCurrentUser.token.split('.')[1]));
