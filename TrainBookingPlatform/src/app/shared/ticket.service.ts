@@ -9,8 +9,9 @@ export class TicketService {
 
     constructor(private http: HttpClient) { }
 
-    getTicketsByDeparture(departureID: number) {
-        return this.http.get(`https://localhost:44367/api/ticket/by-departure/${departureID}`, { withCredentials: true });
+    getTicketsByDeparture(departureID: number, departureDate: Date) {
+        console.log(departureDate);
+        return this.http.get(`https://localhost:44367/api/ticket/by-departure/${departureID}?departureDate=${new Date(departureDate).getTime()}`, { withCredentials: true });
     }
 
     addTicket(ticket: Ticket) {

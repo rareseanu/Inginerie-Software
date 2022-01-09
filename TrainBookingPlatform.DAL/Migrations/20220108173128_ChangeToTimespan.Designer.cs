@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainBookingPlatform.DAL.Repository;
 
 namespace TrainBookingPlatform.DAL.Migrations
 {
     [DbContext(typeof(TrainBookingPlatformDbContext))]
-    partial class TrainBookingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220108173128_ChangeToTimespan")]
+    partial class ChangeToTimespan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,9 +158,6 @@ namespace TrainBookingPlatform.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DepartureDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("DepartureId")
                         .HasColumnType("int");
