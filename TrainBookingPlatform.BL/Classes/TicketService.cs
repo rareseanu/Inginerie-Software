@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using TrainBookingPlatform.BL.Interfaces;
 using TrainBookingPlatform.DAL.Entities;
 using TrainBookingPlatform.DAL.Repository.Interfaces;
+using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.BL.Classes
 {
     public class TicketService : ITicketService
     {
         private ITicketRepository _ticketRepository;
-        public TicketService(ITicketRepository ticketRepository)
+        private IMapper _mapper;
+
+        public TicketService(ITicketRepository ticketRepository, IMapper mapper)
         {
             _ticketRepository = ticketRepository;
+            _mapper = mapper;
         }
         public async Task<Ticket> Add(Ticket ticket)
         {
@@ -40,6 +45,30 @@ namespace TrainBookingPlatform.BL.Classes
         public async Task<IEnumerable<Ticket>> GetAll()
         {
             return await _ticketRepository.GetAll();
+        }
+
+        public async Task<List<TicketDTO>> GetUserTickets(int userId)
+        {
+            List<Ticket> tickets = (await _ticketRepository.GetAll())
+                .Include(p => p.Departure)
+                .Include(p => p.Departure.Line)
+                .Include(p => p.Departure.Line.DestinationStation)
+                .Include(p => p.Departure.Line.DepartureStation)
+                .Where(p => p.UserId == userId)
+                .ToList();
+
+            List<TicketDTO> ticketDTOs = new List<TicketDTO>();
+            foreach (var ticket in tickets)
+            {
+                TicketDTO ticketDTO = _mapper.Map<TicketDTO>(ticket);
+                ticketDTO.DepartureStationName = ticket.Departure.Line.DepartureStation.Name;
+                ticketDTO.DestinationStationName = ticket.Departure.Line.DestinationStation.Name;
+
+                ticketDTO.Departure = null;
+                ticketDTOs.Add(ticketDTO);
+            }
+
+            return ticketDTOs;
         }
     }
 }

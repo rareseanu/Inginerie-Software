@@ -16,4 +16,6 @@ export class Ticket {
     public seatNumber: number;
     public departureDate: Date;
     public price: number;
+    public departureStationName: string;
+    public destinationStationName: string;
 }

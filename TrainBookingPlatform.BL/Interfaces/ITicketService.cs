@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainBookingPlatform.DAL.Entities;
+using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.BL.Interfaces
 {
@@ -14,5 +15,6 @@ namespace TrainBookingPlatform.BL.Interfaces
         public Task<Ticket> Update(Ticket ticket);
         public Task<Ticket> Get(int id);
         public Task<IEnumerable<Ticket>> GetAll();
+        public Task<List<TicketDTO>> GetUserTickets(int userId);
     }
 }

@@ -12,5 +12,8 @@ namespace TrainBookingPlatform.TL.DTOs
         public DateTime DepartureDate { get; set; }
         public int SeatNumber { get; set; }
         public int Price { get; set; }
+        public string DepartureStationName { get; set; }
+        public string DestinationStationName { get; set; }
+        public int WagonNumber { get; set; }
     }
 }

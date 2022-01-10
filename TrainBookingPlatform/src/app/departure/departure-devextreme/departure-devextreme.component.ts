@@ -21,9 +21,9 @@ export class DepartureDevextremeComponent {
   }
 
   ngOnInit() {
-    this.departureService.getDepartures();
     this.lineService.getLines();
     this.trainService.getTrains();
+    this.departureService.getDepartures();
   }
 
   public displayExpr = (item: any) => {

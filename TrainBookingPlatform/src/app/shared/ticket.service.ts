@@ -24,7 +24,6 @@ export class TicketService {
                 else {
                     this.toastService.addToast("Error!", "Something went wrong.")
                 }
-
             }),
         ).subscribe();
     }
