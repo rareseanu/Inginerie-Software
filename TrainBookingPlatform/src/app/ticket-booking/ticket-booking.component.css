@@ -16,13 +16,10 @@
       margin: auto 1rem auto auto;
   }
 
-  .routeVisualizer {
+  #routeVisualizer {
       width: 40vw;
       height: 55vh;
       position: relative;
       margin: auto auto auto 1rem;
-  }
-
-  #map {
-    height: 100%;
+      overflow: hidden;
   }
