@@ -2,12 +2,13 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Wagon } from "./wagon.model";
 import { Ticket } from "./ticket.model";
+import { ToastService } from "./toast.service";
 
 @Injectable({providedIn: 'root'})
 export class TicketService {
     dataSource: Ticket[] = [];
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private toastService: ToastService) { }
 
     getTicketsByDeparture(departureID: number, departureDate: Date) {
         return this.http.get(`https://localhost:44367/api/ticket/by-departure/${departureID}?departureDate=${new Date(departureDate).getTime()}`, { withCredentials: true });

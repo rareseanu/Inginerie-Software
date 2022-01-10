@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Response } from "./response.model";
+import { ToastService } from "./toast.service";
 import { User } from "./user.model";
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +12,7 @@ export class AuthenticationService {
     public currentUser: Observable<User | null>;
     private refreshTokenTimeout: any;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private toastService: ToastService) {
         this.currentUserSubject = new BehaviorSubject<User | null>(null);
         this.currentUser = this.currentUserSubject.asObservable();
         this.currentUser.subscribe();
@@ -37,11 +38,17 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string): Observable<Response> {
-        return this.http.post<Response>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true})
+        return this.http.post<Response>(`https://localhost:44367/api/user/login`, { email, password }, { withCredentials: true })
             .pipe(
                 tap(data => {
-                    if(data.value != null){
-                        var user = <User> data.value;
+                    if (data.isSuccess) {
+                        this.toastService.addToast("Success!", "Logged in successfully!");
+                    }
+                    else {
+                        this.toastService.addToast("Error!", "Something went wrong.");
+                    }
+                    if (data.value != null) {
+                        var user = <User>data.value;
                         user.role = this.getCurrentUserRole(user.token);
                         user.email = this.getCurrentUserEmail(user.token);
                         user.roleId = this.getCurrentUserRoleId(user.token);
@@ -67,7 +74,12 @@ export class AuthenticationService {
         return this.http.put<Response>(`https://localhost:44367/api/user/register`, { email, password }, { withCredentials: true })
             .pipe(
                 tap(data => {
-                    console.log("User registered.");
+                    if (data.isSuccess) {
+                        this.toastService.addToast("Success!", "Registered successfully!");
+                    }
+                    else {
+                        this.toastService.addToast("Error!", "Something went wrong.");
+                    }
                 }),
             );
     }
@@ -76,8 +88,8 @@ export class AuthenticationService {
         return this.http.put<Response>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
             .pipe(
                 tap(data => {
-                    if(data.value != null){
-                        var user = <User> data.value;
+                    if (data.value != null) {
+                        var user = <User>data.value;
                         user.role = this.getCurrentUserRole(user.token);
                         user.email = this.getCurrentUserEmail(user.token);
                         user.roleId = this.getCurrentUserRoleId(user.token);
@@ -92,8 +104,8 @@ export class AuthenticationService {
         return this.http.put<Response>(`https://localhost:44367/api/user/refreshToken`, {}, { withCredentials: true })
             .pipe(
                 tap(data => {
-                    if(data.value != null){
-                        var user = <User> data.value;
+                    if (data.value != null) {
+                        var user = <User>data.value;
                         user.role = this.getCurrentUserRole(user.token);
                         user.email = this.getCurrentUserEmail(user.token);
                         user.roleId = this.getCurrentUserRoleId(user.token);

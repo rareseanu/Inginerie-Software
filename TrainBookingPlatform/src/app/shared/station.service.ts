@@ -2,12 +2,13 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Station } from "./station.model";
 import { tap } from "rxjs";
+import { ToastService } from "./toast.service";
 
 @Injectable({ providedIn: 'root' })
 export class StationService {
     dataSource: Station[] = [];
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private toastService: ToastService) { }
 
     getStations() {
         this.http.get(`https://localhost:44367/api/station/`, { withCredentials: true })
@@ -17,14 +18,14 @@ export class StationService {
     remove(data: any) {
         var station: Station = data.data;
         this.http.delete(`https://localhost:44367/api/station/${station.id}`, { withCredentials: true, responseType: 'text' }).pipe(
-            tap(() => {
+            tap((message) => {
 
                 this.getStations();
-                 if(data=="removed") {
-                  this.toastService.addToast("Succes!", "Station removed successfully!")
+                if (message == "removed") {
+                    this.toastService.addToast("Success!", "Station removed successfully!")
                 }
                 else {
-                  this.toastService.addToast("Error!", "Something went wrong.")
+                    this.toastService.addToast("Error!", "Something went wrong.")
                 }
             }),
         ).subscribe();
@@ -33,13 +34,13 @@ export class StationService {
     add(data: any) {
         var station: Station = data.data;
         this.http.post(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text' }).pipe(
-            tap(() => {
+            tap((message) => {
                 this.getStations();
-                if(data=="added") {
-                  this.toastService.addToast("Succes!", "Station added successfully!")
+                if (message == "added") {
+                    this.toastService.addToast("Success!", "Station added successfully!")
                 }
                 else {
-                  this.toastService.addToast("Error!", "Something went wrong.")
+                    this.toastService.addToast("Error!", "Something went wrong.")
                 }
 
             }),
@@ -49,13 +50,13 @@ export class StationService {
     update(data: any) {
         var station: Station = Object.assign(data.oldData, data.newData);
         this.http.put(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text' }).pipe(
-            tap(() => {
+            tap((message) => {
                 this.getStations();
-                 if(data=="updated") {
-                  this.toastService.addToast("Succes!", "Station updated successfully!")
+                if (message == "updated") {
+                    this.toastService.addToast("Success!", "Station updated successfully!")
                 }
                 else {
-                  this.toastService.addToast("Error!", "Something went wrong.")
+                    this.toastService.addToast("Error!", "Something went wrong.")
                 }
             }),
         ).subscribe();
