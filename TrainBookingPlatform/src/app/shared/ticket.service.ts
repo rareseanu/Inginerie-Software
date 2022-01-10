@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Wagon } from "./wagon.model";
 import { Ticket } from "./ticket.model";
 import { ToastService } from "./toast.service";
+import { tap } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class TicketService {
@@ -15,8 +16,17 @@ export class TicketService {
     }
 
     addTicket(ticket: Ticket) {
-        this.http.post(`https://localhost:44367/api/ticket/`, ticket, { withCredentials: true, responseType: 'text' })
-            .subscribe();
+        this.http.post(`https://localhost:44367/api/ticket/`, ticket, { withCredentials: true, responseType: 'text' }).pipe(
+            tap((message) => {
+                if (message == "added") {
+                    this.toastService.addToast("Success!", "Ticket booked successfully!")
+                }
+                else {
+                    this.toastService.addToast("Error!", "Something went wrong.")
+                }
+
+            }),
+        ).subscribe();
     }
 
     getTickets() {

@@ -188,7 +188,7 @@ namespace TrainBookingPlatform.BL.Classes
         {
             using (SHA512 encryption = SHA512.Create())
             {
-                UserDTO user = new UserDTO() { EmailAddress = email, OldPassword = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
+                UserDTO user = new UserDTO() { EmailAddress = email, OldPassword = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 2 };
                 User existingUser = await _userRepository.Get(p => p.EmailAddress == email).FirstOrDefaultAsync();
                 if (existingUser == null)
                 {
