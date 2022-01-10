@@ -20,6 +20,12 @@ export class StationService {
             tap(() => {
 
                 this.getStations();
+                 if(data=="removed") {
+                  this.toastService.addToast("Succes!", "Station removed successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -29,6 +35,13 @@ export class StationService {
         this.http.post(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getStations();
+                if(data=="added") {
+                  this.toastService.addToast("Succes!", "Station added successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
+
             }),
         ).subscribe();
     }
@@ -38,6 +51,12 @@ export class StationService {
         this.http.put(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getStations();
+                 if(data=="updated") {
+                  this.toastService.addToast("Succes!", "Station updated successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }

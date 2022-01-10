@@ -35,6 +35,12 @@ export class DepartureService {
         this.http.delete(`https://localhost:44367/api/departure/${departure.id}`, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getDepartures();
+                 if(data=="removed") {
+                  this.toastService.addToast("Succes!", "Departure removed successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -44,6 +50,12 @@ export class DepartureService {
         this.http.post(`https://localhost:44367/api/departure/`, departure, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getDepartures();
+                 if(data=="added") {
+                  this.toastService.addToast("Succes!", "Departure added successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -53,6 +65,12 @@ export class DepartureService {
         this.http.put(`https://localhost:44367/api/departure/`, departure, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getDepartures();
+                 if(data=="updated") {
+                  this.toastService.addToast("Succes!", "Departure updated successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
