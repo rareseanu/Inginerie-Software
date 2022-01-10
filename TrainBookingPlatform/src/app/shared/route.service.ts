@@ -22,6 +22,12 @@ export class RouteService {
         this.http.delete(`https://localhost:44367/api/route/${route.id}`, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getRoutes();
+                 if(data=="removed") {
+                  this.toastService.addToast("Succes!", "Route removed successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -31,6 +37,12 @@ export class RouteService {
         this.http.post(`https://localhost:44367/api/route/`, route, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getRoutes();
+                 if(data=="added") {
+                  this.toastService.addToast("Succes!", "Route added successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -47,6 +59,12 @@ export class RouteService {
         this.http.put(`https://localhost:44367/api/route/`, route, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getRoutes();
+                 if(data=="updated") {
+                  this.toastService.addToast("Succes!", "Route updated successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }

@@ -22,6 +22,12 @@ export class LineService {
         this.http.delete(`https://localhost:44367/api/line/${line.id}`, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getLines();
+                 if(data=="removed") {
+                  this.toastService.addToast("Succes!", "Line removed successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -31,6 +37,12 @@ export class LineService {
         this.http.post(`https://localhost:44367/api/line/`, line, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getLines();
+                 if(data=="added") {
+                  this.toastService.addToast("Succes!", "Line added successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }
@@ -40,6 +52,12 @@ export class LineService {
         this.http.put(`https://localhost:44367/api/line/`, line, { withCredentials: true, responseType: 'text' }).pipe(
             tap(() => {
                 this.getLines();
+                 if(data=="updated") {
+                  this.toastService.addToast("Succes!", "Line updated successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
             }),
         ).subscribe();
     }

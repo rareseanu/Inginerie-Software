@@ -24,6 +24,12 @@ export class TrainService {
         this.http.delete(`https://localhost:44367/api/train/${train.id}`, { withCredentials: true, responseType: 'text' }).pipe(
           tap(() => {
             this.getTrains();
+             if(data=="removed") {
+                  this.toastService.addToast("Succes!", "Train removed successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
           }),
         ).subscribe();
       }
@@ -33,6 +39,12 @@ export class TrainService {
         this.http.post(`https://localhost:44367/api/train/`, train, { withCredentials: true, responseType: 'text' }).pipe(
           tap(() => {
             this.getTrains();
+             if(data=="added") {
+                  this.toastService.addToast("Succes!", "Train added successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
           }),
         ).subscribe();
       }
@@ -42,6 +54,12 @@ export class TrainService {
         this.http.put(`https://localhost:44367/api/train/`, train, { withCredentials: true, responseType: 'text' }).pipe(
           tap(() => {
             this.getTrains();
+             if(data=="added") {
+                  this.toastService.addToast("Succes!", "Train updated successfully!")
+                }
+                else {
+                  this.toastService.addToast("Error!", "Something went wrong.")
+                }
           }),
         ).subscribe();
       }
