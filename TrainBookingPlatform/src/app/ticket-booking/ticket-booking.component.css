@@ -7,6 +7,22 @@
     margin: 0 auto 32px;
     padding: 0 16px;
     max-width: 960px;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    margin-top: 1rem;
+  }
+
+  .ticketBooking {
+      margin: auto 1rem auto auto;
+  }
+
+  .routeVisualizer {
+      width: 40vw;
+      height: 55vh;
+      position: relative;
+      margin: auto auto auto 1rem;
+  }
+
+  #map {
+    height: 100%;
   }
