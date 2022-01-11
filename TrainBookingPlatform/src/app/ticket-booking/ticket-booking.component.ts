@@ -27,9 +27,16 @@ export class TicketBookingComoponent implements OnInit {
 
     constructor(public stationService: StationService, public routeService: RouteService,
         public departureService: DepartureService, public wagonService: WagonService,
-        public authenticationService: AuthenticationService, public ticketService: TicketService, public lineService: LineService) { }
+        public authenticationService: AuthenticationService, public ticketService: TicketService, public lineService: LineService) {
+        }
 
     ngOnInit(): void {
+        var map = $('#map').detach();
+        $('#routeVisualizer').append(map);
+
+        var el = document.getElementById('map');
+        el?.setAttribute("style", "height: 100%");
+        
         this.bookingForm = new FormGroup({
             departureStation: new FormControl('', Validators.required),
             arrivalStation: new FormControl({value: '', disabled: true}, Validators.required),
@@ -58,12 +65,20 @@ export class TicketBookingComoponent implements OnInit {
     }
 
     onDepartureStationChanged() {
+        if (this.f['arrivalStation'].status == 'VALID') {
+            $("#departureStationName").trigger("custom");
+        }
         this.f['arrivalStation'].enable();
+        $('#departureStationName')[0].innerHTML = this.f['departureStation'].value.name;
     }
 
     onArrivalStationChanged() {
         this.routeService.getRoutesByStations(this.f['departureStation'].value.id, this.f['arrivalStation'].value.id);
         this.f['route'].enable();
+        $('#arrivalStationName')[0].innerHTML = this.f['arrivalStation'].value.name;
+        console.log($('#arrivalStationName')[0].innerHTML);
+
+        $("#arrivalStationName").trigger("custom");
     }
 
     onRouteChanged() {

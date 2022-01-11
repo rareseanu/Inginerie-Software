@@ -42,9 +42,14 @@ export class StationDevextremeComponent {
   add(data: any) {
     var station: Station = data.data;
     this.http.post(`https://localhost:44367/api/station/`, station, { withCredentials: true, responseType: 'text'}).pipe(
-      tap(() => {
+      tap((data) => {
         this.getStations();
-        this.toastService.addToast("Test", "Succes bitch");
+        if (data == "added") {
+          this.toastService.addToast("Success!", "Station added successfully!");
+        }
+        else {
+          this.toastService.addToast("Error!", "Something went wrong.");
+        }
       }),
     ).subscribe();
   }

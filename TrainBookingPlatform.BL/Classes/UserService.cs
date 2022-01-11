@@ -33,7 +33,7 @@ namespace TrainBookingPlatform.BL.Classes
         {
             User user = _mapper.Map<User>(userDTO);
             User createdUser = await _userRepository.Create(user);
-            return Result<UserDTO>.Success(_mapper.Map<UserDTO>(createdUser)); 
+            return Result<UserDTO>.Success(_mapper.Map<UserDTO>(createdUser));
         }
         public async Task<User> Delete(int id)
         {
@@ -53,16 +53,16 @@ namespace TrainBookingPlatform.BL.Classes
                 User existingUser = await _userRepository.Get(p => p.Id == user.Id).FirstOrDefaultAsync();
                 try
                 {
-                    if(userDTO.NewPassword == "")
+                    if (userDTO.NewPassword == "")
                     {
                         user.Password = existingUser.Password;
                     }
-                    if(userDTO.NewPassword != "" && existingUser.Password == user.Password )
+                    if (userDTO.NewPassword != "" && existingUser.Password == user.Password)
                     {
                         user.Password = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(userDTO.NewPassword)));
                     }
-                    else if(userDTO.NewPassword != "" && existingUser.Password != user.Password)
-                    {                      
+                    else if (userDTO.NewPassword != "" && existingUser.Password != user.Password)
+                    {
                         return Result<UserDTO>.Failure("User update failed.");
                     }
                     await _userRepository.Update(user);
@@ -80,7 +80,7 @@ namespace TrainBookingPlatform.BL.Classes
         {
             var user = await _userRepository.Get(p => p.Id == id).FirstOrDefaultAsync();
             user.Password = null;
-            if(user == null)
+            if (user == null)
             {
                 return Result<UserDTO>.Failure("User not found.");
             }
@@ -188,13 +188,13 @@ namespace TrainBookingPlatform.BL.Classes
         {
             using (SHA512 encryption = SHA512.Create())
             {
-                UserDTO user = new UserDTO() { EmailAddress = email, OldPassword = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 1 };
+                UserDTO user = new UserDTO() { EmailAddress = email, OldPassword = Encoding.UTF8.GetString(encryption.ComputeHash(Encoding.UTF8.GetBytes(password))), RoleId = 2 };
                 User existingUser = await _userRepository.Get(p => p.EmailAddress == email).FirstOrDefaultAsync();
                 if (existingUser == null)
                 {
                     return await Add(user);
                 }
-                return Result<UserDTO>.Failure("User already existing.");
+                return Result<UserDTO>.Failure("User already exists.");
             }
         }
 

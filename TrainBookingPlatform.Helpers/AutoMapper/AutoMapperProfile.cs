@@ -13,8 +13,8 @@ namespace TrainBookingPlatform.Helpers.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<LineDTO,Line>();
-            CreateMap<Line,LineDTO>();
+            CreateMap<LineDTO, Line>();
+            CreateMap<Line, LineDTO>();
             CreateMap<DepartureDTO, Departure>()
                 .ForMember(d => d.ArrivalTime,
                     o => o.MapFrom(src => src.ArrivalTime.TimeOfDay))

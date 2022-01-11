@@ -1,5 +1,5 @@
-<div class="border rounded p-3 text-center">
-    <h4>Ticket No.{{ticketService.dataSource.length - ticketNo}}</h4>
+<div class="border rounded text-center py-2" id="ticket">
+    <h4>#{{ticketService.dataSource.length - ticketNo}}</h4>
     <qr-code [value]="ticketToJson()"></qr-code><br>
     <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" [attr.data-bs-target]="'#' + 'ticketDetails' + ticketNo">
         Details
@@ -14,7 +14,9 @@
                 </div>
                 <div class="modal-body">
                     <qr-code [size]="200" [value]="ticketToJson()"></qr-code><br>
-                    <p class="mt-2">Purchase Date: {{ticket.purchasedDate.toString().substring(0,10)}}</p>
+                    <p class="mt-2">Departure: {{ticket.departureStationName}}</p>
+                    <p>Destination: {{ticket.destinationStationName}}</p>
+                    <p>Purchase Date: {{ticket.purchasedDate.toString().substring(0,10)}}</p>
                     <p>Wagon No.: {{ticket.wagonNumber}}</p>
                     <p>Seat No.: {{ticket.seatNumber}}</p>
                     <p>Departure Date: {{ticket.departureDate.toString().substring(0,10)}}</p>

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TrainBookingPlatform.DAL.Entities;
+using TrainBookingPlatform.TL.DTOs;
 
 namespace TrainBookingPlatform.Helpers.Comparers
 {
-    public class TicketComparer : IComparer<Ticket>
+    public class TicketComparer : IComparer<TicketDTO>
     {
-        public int Compare(Ticket? x, Ticket? y)
+        public int Compare(TicketDTO? x, TicketDTO? y)
         {
             if (x.PurchasedDate < y.PurchasedDate)
             {

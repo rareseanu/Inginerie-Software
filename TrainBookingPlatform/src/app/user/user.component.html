@@ -1,13 +1,13 @@
-<div class="mt-1 d-flex align-items-start">
-  <div class="nav navbar-light bg-light flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+<div class="d-flex align-items-start">
+  <div class="nav navbar-light bg-light flex-column nav-pills" id="v-pills-tab" role="tablist"
     aria-orientation="vertical">
-    <button class="nav-link active" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button"
+    <button class="nav-link active button-tab" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button"
       role="tab" aria-controls="profile" aria-selected="true">Profile</button>
-    <button class="nav-link" id="tickets-tab" data-bs-toggle="pill" data-bs-target="#tickets" type="button" role="tab"
+    <button class="nav-link button-tab" id="tickets-tab" data-bs-toggle="pill" data-bs-target="#tickets" type="button" role="tab"
       aria-controls="tickets" aria-selected="false">Tickets</button>
 
   </div>
-  <div class="tab-content mt-5 w-100" id="v-pills-tabContent">
+  <div class="tab-content w-100 mt-3" id="v-pills-tabContent">
     <div class="tab-pane fade show active w-25 center" id="profile" role="tabpanel" aria-labelledby="profile">
       <h2 class="mb-4 ">Profile info</h2>
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -53,7 +53,7 @@
         </button>
       </form>
     </div>
-    <div class="tab-pane fade d-flex row w-100" id="tickets" role="tabpanel" aria-labelledby="tickets">
+    <div class="tab-pane fade d-flex row w-100 center" id="tickets" role="tabpanel" aria-labelledby="tickets">
       <div class="col-lg-2" *ngFor="let ticket of ticketService.dataSource; let i = index">
         <app-user-ticket [ticket]="ticket" [ticketNo]="i"></app-user-ticket>
       </div>

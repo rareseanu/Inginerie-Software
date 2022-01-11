@@ -48,10 +48,10 @@ namespace TrainBookingPlatform.API.Controllers
         [HttpGet("user/{userId}")]
         public async Task<ObjectResult> GetUserTickets([FromRoute] int userId)
         {
-            List<Ticket> tickets = (await _service.GetAll()).Where(p => p.UserId == userId).ToList();
-            tickets.Sort(new TicketComparer());
-            tickets.Reverse();
-            return Ok(tickets);
+            List<TicketDTO> ticketDTOs = await _service.GetUserTickets(userId);
+            ticketDTOs.Sort(new TicketComparer());
+            ticketDTOs.Reverse();
+            return Ok(ticketDTOs);
         }
 
         [HttpGet("by-departure/{departureID}")]

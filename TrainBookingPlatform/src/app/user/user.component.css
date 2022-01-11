@@ -1,9 +1,37 @@
-
-  .content {
-    display: flex;
-    align-items: center;
+@media only screen and (max-width: 590px) {
+  #profile {
+    margin-left: 12rem;
   }
 
-  .center{
-    margin:auto;
-  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  margin: auto;
+}
+
+#v-pills-tab {
+  left: 0;
+}
+
+#profile {
+  z-index: 10;
+  min-width: 200px;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+#tickets {
+  min-width: 200px;
+  position: relative;
+}
+
+.button-tab {
+  width: 10rem;
+  z-index: 5;
+}
